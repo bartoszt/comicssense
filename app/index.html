@@ -22,17 +22,23 @@
   <link rel="import" href="elements/elements.html">
   <!-- endbuild-->
     
-    
+  <link rel="import" href="bower_components/app-router/app-router.html">
 
 </head>
 
 <body unresolved>
+   <div class="content">
+       <app-router>
+          <!-- matches an exact path -->
+          <app-route path="/" import="/pages/home-page/home-page.html"></app-route>
+          <app-route path="/scene" import="/pages/scene-page/scene-page.html"></app-route>
+          <app-route path="/gallery" import="/pages/gallery-page/gallery-page.html"></app-route>
 
-  <div class="hero-unit">
-    <login-form></login-form>
-      <gallery-view></gallery-view>
+          <!-- matches everything else -->
+          <app-route path="*" import="/pages/not-found-page/not-found-page.html"></app-route>
+       </app-router>
   </div>
-
+    
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
