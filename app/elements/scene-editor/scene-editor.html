@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
 
 <polymer-element name="scene-editor" attributes="sceneNr activate">
   <template>
@@ -46,14 +47,18 @@
       <button type="submit" id="save" >Save</button>
       </div>
     </section>
-    
+    <pvc-globals values="{{globals}}"></pvc-globals>
+    <firebase-element id="fbase" location="https://comicsense.firebaseio.com/currentComics" data="{{data}}" keys="{{keys}}" log="true" ></firebase-element>
+   
   </template>
   <script>
   Polymer({
     canvas: null,
     cwidth: 800,
     cheight: 450,
-    _self: null,    
+    _self: null,
+    data: null,
+
     allowDropAction: function(ev) {
       ev.originalEvent.preventDefault();
     },
@@ -72,6 +77,21 @@
         }
         ev.originalEvent.dataTransfer.setData("text", '{"src": "'+ev.originalEvent.target.src+'","type":"'+type+'"}');
         console.log("drag");
+    },
+    autoSaveSceneAction: function() {
+        var date = new Date();
+        var id = "globals.currentUser.auth.uid";
+        var item = { 
+          0: {
+            image: this.canvas.toSVG(),
+            author: id,
+            data: date.toDateString()
+          }
+
+        }
+      //get global current id ?
+        _self.data.scenes = item;
+        console.log("robie nieby sejwa?");
     },
     setTextPosition: function(id) {
       text = _self.$.c1.clouds[id]['text'];
@@ -109,6 +129,7 @@
           //or add item in bg replacing existing so you can fit it in.
           /*_self.$.c1.fabric.add(oImg)
           _self.$.c1.fabric.sendToBack(oImg);*/
+          _self.autoSaveSceneAction();
         });
     },
     insertItemAction: function(url, x, y) {
@@ -116,6 +137,7 @@
           oImg.set({width: 50, height: 50, top: x, left: y});
           _self.$.c1.fabric.add(oImg)
         });
+        _self.autoSaveSceneAction();
     },
     insertCloudAction: function(url) {
       fabric.Image.fromURL(url, function(img) {
@@ -156,6 +178,7 @@
         })
         _self.$.c1.fabric.add(img);
         });      
+        _self.autoSaveSceneAction();
     },
 
 
