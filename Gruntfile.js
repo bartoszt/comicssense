@@ -305,7 +305,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'uglify',
     'cssmin',
-    'vulcanize',
+    'vulcanize'
   ]);
 
   grunt.registerTask('default', [

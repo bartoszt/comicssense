@@ -1,15 +1,173 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
 
+
+
 <polymer-element name="comics-view">
-    <template>
-        <div>Current comics in progress {{title}}</div> 
+    <template> 
+        <style>
+        .comicsTemplate {
+            width:100%;
+            border:1px solid #ccc;
+            height:500px;
+        }
+        .comicsTemplateItem {
+            width:30%;
+            height:100%;
+            padding:1%;
+            float:left;
+            border:1px solid #333;
+            background:gray;
+        }
+        .comicsTemplateItem.available {
+            background:green;
+            cursor:pointer;
+        }
+        .comicsTemplateItem.available:hover {
+            opacity:0.8;   
+        }
+        .comicsTemplateItem.done {
+            background:white;
+        }
+        .comicsTemplateItem.progress {
+            background:yellow;
+        }
+        #comicsInProgress {
+            display:none;
+        }
+        .inProgress #comicsInProgress {
+            display:block;
+        }
+        .inProgress #comicsNew {
+            display:none;
+        }
+        </style>
+        
+        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
+        
+        <section id="comicsView">
+            <div id="comicsNew">
+                <h1>Create new comics</h1>
+                <label for="comicsTitle">Comics Title</label>
+                <input id="comicsTitle" type="text" value="{{title}}" />
+                <button on-click="{{createNewComicsAction}}">Create new</button>
+            </div>
+
+
+            <div id="comicsInProgress">
+                <div>Current comics in progress {{data.title}}</div>
+
+                <div class="comicsTemplate">
+                    <div class="comicsTemplateItem {{status[0]}}" on-click="{{editScene}}" data-scenenr="0">
+                         {{data.scenes[0].image}}
+                    </div>            
+                    <div class="comicsTemplateItem {{status[1]}}" on-click="{{editScene}}" data-scenenr="1">                
+                        {{data.scenes[1].image}}
+                    </div>            
+                    <div class="comicsTemplateItem {{status[2]}}" on-click="{{editScene}}" data-scenenr="2">                
+                        {{data.scenes[2].image}}
+                    </div>
+                </div>
+            </div>
+        </section>
+        
     </template>
     
     <script>
     (function () {
-      Polymer({  
-          title : "Comics number 1"
+      Polymer({
+          status : {},
+          
+          oneItemIsAvailable : false,
+          oneItemIsInProgress : false,
+          
+          
+          // lifecycle methods
+          domReady : function () { 
+            this.loadCurrentComics();  
+          },
+        
+          observe : {
+            'data.scenes' : 'dataScenesChanged'  
+          },
+          
+          
+          // custom methods
+          dataScenesChanged : function () {
+            console.log('data changed');
+            this.loadCurrentComics();
+          },
+          
+                    
+          loadCurrentComics : function () {              
+              $(this.$.comicsView).addClass('inProgress');
+              
+              this.oneItemIsAvailable = false;
+              this.oneItemIsInProgress = false; 
+              
+              if(this.data) {
+                  var _self = this;
+                  console.log("loading current project"); 
+                  $(this.$.comicsInProgress).find('.comicsTemplateItem').each(function(i){ 
+                      if (_self.data.scenes[i].f_done) {
+                          _self.status[i] = "done";
+                      }
+                      else if (_self.data.scenes[i].f_inprogress) {
+                          _self.status[i] = "progress";
+                          _self.oneItemIsInProgress = true;
+                      }
+                      else if(!_self.data.scenes[i].f_done && !_self.data.scenes[i].f_inprogress && !_self.oneItemIsAvailable && !_self.oneItemIsInProgress) {
+                           _self.status[i] = 'available';
+                          console.log("scene " + i + "is available to edit");
+                           _self.oneItemIsAvailable = true;
+                      } else {
+                          _self.status[i] = '';
+                      }
+                  });
+                   
+              }
+          },
+          
+          createNewComicsAction : function () {
+            var newComics = {
+                title : this.title,
+                scenes : {
+                    '0' : {
+                        author : 'globals.currentUser.auth.uid',
+                        date : '',
+                        image : '',
+                        f_inprogress : false,
+                        f_done : false
+                    },
+                    '1' : {
+                        author : 'globals.currentUser.auth.uid',
+                        date : '',
+                        image : '',
+                        f_inprogress : false,
+                        f_done : false
+                    },
+                    '2' : {
+                        author : 'globals.currentUser.auth.uid',
+                        date : '',
+                        image : '',
+                        f_inprogress : false,
+                        f_done : false
+                    }
+                }
+            }
+            this.data = newComics; 
+          },
+          
+          editScene : function (e, detail, target) {
+            console.log('Edit scene number: ' + target.dataset.scenenr);
+              var sceneNr = target.dataset.scenenr;
+              //test 
+              if($(e.toElement).hasClass('available')) {
+                  this.data.scenes[sceneNr].f_inprogress = true;                  
+                  var test = this.$.base.commit(); 
+              }
+          }
+      
       });
     })();
     </script>
