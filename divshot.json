@@ -1,3 +1,4 @@
 {
-    "name" : "ss15-trolololo"
+    "name" : "ss15-trolololo",
+    "root" : "./dist"
 }
