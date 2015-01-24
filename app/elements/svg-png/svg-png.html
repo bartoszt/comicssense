@@ -6,41 +6,29 @@
     <script>
       Polymer( {
         svg: null,
-        stream: null,
         canvas: null,
         _self: null,
-        streamPNG : function() {
-          this.canvas = new fabric.Canvas(this.$.c1);
-          var stream = this.canvas.createPNGStream();
-          stream.on('data', function(chunk) {
-            console.log(chunk);
-          });
-        },
+
         ready: function() {
             
              svg = "<svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 100 100' enable-background='new 0 0 100 100' xml:space='preserve'> <rect x='7' y='17.1' fill='#29093A' stroke='#000000' stroke-miterlimit='10' width='46.2' height='17.6'/> <rect x='25.7' y='32.5' fill='#FFFFFF' stroke='#000000' stroke-miterlimit='10' width='36.5' height='41.5'/><rect x='47.8' y='62.5' fill='#46B2A8' stroke='#000000' stroke-miterlimit='10' width='20.5' height='22.9'/></svg>";
              
-            this.canvas = new fabric.Canvas(this.$.c1);
             this.$.c1.fabric = this.canvas;
             _self = this;
-             ///this.stream = this.canvas.createPNGStream();
 
-             
-            //Alternatywna opcja bez fabrica
             var mySrc = 'data:image/svg+xml;base64,'+window.btoa(svg);
-            // Load up our image.
             var source = new Image();
             source.src = mySrc;
+            var myCanvasContext = this.$.c1.getContext('2d');
+            source.onload = function(){
+                myCanvasContext.drawImage(source,0,0);
+                var img = _self.$.c1.toDataURL("image/png");
+                console.log(img);
+                _self.$.img_png.src = img;                 
+            }            
 
 
-           fabric.loadSVGFromString(svg, function(elem, options) {
-              var obj = fabric.util.groupSVGElements(elem, options);
-              _self.$.c1.fabric.add(obj).renderAll();
-              var img = _self.$.c1.toDataURL("image/png");
-              console.log(img);
-              _self.$.img_png.src = img;              
 
-            });
 
         }
           
