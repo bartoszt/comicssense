@@ -1,6 +1,7 @@
  <polymer-element name="svg-png" attributes="html">
      <template>
         <canvas id="c1" width="200" height="200" style="border: solid 1px #f0f;" ></canvas>
+        <img id="img_png" alt="PNG from Canvas" width="200" height="200" />
     </template>  
     <script>
       Polymer( {
@@ -23,15 +24,22 @@
             this.$.c1.fabric = this.canvas;
             _self = this;
              ///this.stream = this.canvas.createPNGStream();
-            
+
+             
+            //Alternatywna opcja bez fabrica
+            var mySrc = 'data:image/svg+xml;base64,'+window.btoa(svg);
+            // Load up our image.
+            var source = new Image();
+            source.src = mySrc;
+
+
            fabric.loadSVGFromString(svg, function(elem, options) {
               var obj = fabric.util.groupSVGElements(elem, options);
               _self.$.c1.fabric.add(obj).renderAll();
-              setTimeout(function() {
-               var stream =   _self.$.c1.fabric.createPNGStream();
-                  stream.on('data', function(chunk) {
-                    console.log(chunk);
-                  }); }, 900);
+              var img = _self.$.c1.toDataURL("image/png");
+              console.log(img);
+              _self.$.img_png.src = img;              
+
             });
 
         }
