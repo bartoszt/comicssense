@@ -1,0 +1,14 @@
+ <polymer-element name="session-required">
+    <template>
+     <pvc-globals values="{{globals}}"></pvc-globals>
+    </template>
+    <script>
+      Polymer('session-required', {
+        attached: function() { 
+          if(!this.globals.currentUser) {              
+                document.querySelector('app-router').go('/');
+          }
+        }
+      });
+    </script>
+  </polymer-element>

@@ -48,20 +48,21 @@
         </div>
         <div id="loggedIn" hidden?="{{!statusKnown || !user}}">
             Hello {{globals.currentUser.auth.uid}}!
-            <button on-click="{{logout}}">Logout</button>
+            <logout-form></logout-form>
         </div>
     </template>
     <script>
     (function () {
 
       Polymer({  
+        statusKnown : true,
         baseLoginParams : {},
         provider : {},
         domReady : function () {        
         },
         signinAction : function () {        
             this.provider = "password";         
-            this.$.baseLogin.login({'email':this.email, 'password':this.password});     
+            this.$.baseLogin.login({'email':this.email, 'password':this.password}, {'username' : this.email.split('@')[0]});     
             return false;
         },
         registerAction : function () {             
@@ -74,7 +75,7 @@
           
         // sign in by Social hub  
         signinFacebook : function () {      
-            this.$.facebookLogin.login();
+            this.$.facebookLogin.login({}, {'username' : this.email.split('@')[0]});
             console.log('test');
         },
         signinGoogle : function () {    
@@ -99,33 +100,7 @@
         userCreated : function () {
             this.$.baseLogin.login({'email':this.rEmail, 'password':this.rPassword});   
             console.log("userCreated"); 
-        },
-        logout : function () {  
-            switch(this.globals.currentUser.provider) {
-                case 'password':                         
-                    this.$.baseLogin.logout();
-                break;
-
-                case 'facebook': 
-                    this.$.facebookLogin.logout();                    
-                break;
-
-                case 'google':                    
-                    this.$.googleLogin.logout();
-                break;
-
-                case 'twitter':                    
-                    this.$.twitterLogin.logout();
-                break;
-
-                case 'github':                     
-                    this.$.githubLogin.logout();
-                break;
-                
-                default:
-                    console.log("logout failed");
-            }
-        }
+        }        
       });
 
     })();
