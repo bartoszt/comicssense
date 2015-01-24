@@ -47,43 +47,48 @@
             </ul>
         </div>
         <div id="loggedIn" hidden?="{{!statusKnown || !user}}">
-            Hello {{user}}!
+            Hello {{globals.currentUser.auth.uid}}!
+            <button on-click="{{logout}}">Logout</button>
         </div>
     </template>
     <script>
     (function () {
 
-      Polymer({ 
-        password : "trolololo",
-        email : "bartup@wp.pl",
+      Polymer({  
         baseLoginParams : {},
+        provider : {},
         domReady : function () {        
         },
-        signinAction : function () { 
-            this.$.baseLogin.login({'email':this.email, 'password':this.password});             
+        signinAction : function () {        
+            this.provider = "password";         
+            this.$.baseLogin.login({'email':this.email, 'password':this.password});     
             return false;
         },
         registerAction : function () {             
             this.$.baseLogin.createUser(this.rEmail,this.rPassword);
             console.log('register log');
-        },
+        },          
         switchViewAction : function () {         
             $(this.$.loginFormWrapper).toggleClass('register-state');
         },
-        siginFacebook : function () {
-            
+          
+        // sign in by Social hub  
+        signinFacebook : function () {      
+            this.$.facebookLogin.login();
+            console.log('test');
         },
-        signinGoogle : function () {
-            
+        signinGoogle : function () {    
+            this.$.googleLogin.login();            
         },
-        signinGit : function () {
-            
+        signinGithub : function () {          
+            this.$.githubLogin.login();
         },
-        signinTwitter : function () {
-            
+        signinTwitter : function () {  
+            this.$.twitterLogin.login();
         },
+          
         onLogin : function() {
-            this.globals.currentUser = this.user;
+            this.globals.currentUser = this.user; 
             console.log("user logged")
         },
         onLoginError : function (err) {
@@ -94,6 +99,32 @@
         userCreated : function () {
             this.$.baseLogin.login({'email':this.rEmail, 'password':this.rPassword});   
             console.log("userCreated"); 
+        },
+        logout : function () {  
+            switch(this.globals.currentUser.provider) {
+                case 'password':                         
+                    this.$.baseLogin.logout();
+                break;
+
+                case 'facebook': 
+                    this.$.facebookLogin.logout();                    
+                break;
+
+                case 'google':                    
+                    this.$.googleLogin.logout();
+                break;
+
+                case 'twitter':                    
+                    this.$.twitterLogin.logout();
+                break;
+
+                case 'github':                     
+                    this.$.githubLogin.logout();
+                break;
+                
+                default:
+                    console.log("logout failed");
+            }
         }
       });
 
