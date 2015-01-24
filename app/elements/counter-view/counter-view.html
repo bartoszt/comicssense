@@ -1,0 +1,37 @@
+ <polymer-element name="counter-view" attributes="">
+    <template>
+        <div id="minutes">{{m}}</div>
+        <div id="seconds">{{s}}</div>
+        <button on-click="{{startTimer}}">startTimer</button>
+    </template>
+    <script>
+        Polymer('counter-view', {
+            sec: 0,
+            m: 0,
+            s: 0, 
+            timeout: null,
+            ready: function() {
+                _self = this;
+                document.onmousemove = function(){
+                    clearTimeout( _self.timeout);
+                   _self.timeout = setTimeout(function(){ alertify.error("Away too long"); }, 60000);
+                }
+            },
+            startTimer: function() {
+                _self = this;
+                function pad(val) {
+                    return val > 9 ? val : "0" + val;
+                }
+                _self.timer = setInterval(function () {
+                    _self.s = pad(++(_self.sec) % 60);
+                    _self.m = $('#minutes').innerHTML = pad(parseInt((_self.sec) / 60, 10));
+                }, 1000);
+                
+                setTimeout(function () {
+                    clearInterval(_self.timer);
+                    alertify.error("Time has passed");
+                }, 600000);
+            } 
+      });
+    </script>
+  </polymer-element>
