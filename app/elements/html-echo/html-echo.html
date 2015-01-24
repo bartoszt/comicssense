@@ -2,7 +2,6 @@
     <script>
       Polymer('html-echo', {
         htmlChanged: function() {
-          // WARNING: potential XSS vulnerability if `html` comes from an untrusted source
           this.innerHTML = this.html;
         }
       });
