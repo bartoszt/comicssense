@@ -3,11 +3,9 @@
 
 
 <polymer-element name="gallery-view" attributes="">
- 
     <template>
-    <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/"></firebase-element>
-      <input id="test" type="text" value="{{data}}" on-change="{{testFunc}}" />
-      <p>{{data.comics[0].author}}</p>
+        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/"></firebase-element>
+        <p>{{data.comics[0].author}}</p>
     </template>  
     <script>
     (function () {
@@ -22,13 +20,13 @@
                             "scenes": 
                                [ 
                                     {   
-                                        "image": "scene1.svg",
+                                        "imageUrl": "scene1.svg",
                                         "author": "Mateusz",
                                         "title": "Intro scene",
                                         "data": "2015-01-12"
                                     }, 
                                     {   
-                                        "image": "scene2.svg",
+                                        "imageUrl": "scene2.svg",
                                         "author": "Marcin",
                                         "title": "scene 2",
                                         "data": "2015-01-12"
@@ -55,9 +53,6 @@
                         }
                     ]
                 };            
-              this.$.base.push();
-          },
-          testFunc : function () {              
               this.$.base.push();
           }
        });
