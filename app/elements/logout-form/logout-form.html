@@ -1,0 +1,21 @@
+ <polymer-element name="logout-form">
+    <template>
+        
+    <firebase-login id="baseLogin" user="{{user}}" location="https://comicsense.firebaseio.com/users" provider="{{provider}}"></firebase-login> 
+   
+    <pvc-globals values="{{globals}}"></pvc-globals>
+        
+    <button on-click="{{logout}}" hidden?="{{!globals.currentUser}}">Logout</button>
+    
+     </template>
+    <script>
+      Polymer({
+        logout : function () {  
+            this.provider = this.globals.currentUser.provider;
+            this.globals.currentUser = null;
+            this.$.baseLogin.logout();
+            document.querySelector('app-router').go('/');
+        }
+      })();
+    </script>
+  </polymer-element>
