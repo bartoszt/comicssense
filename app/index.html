@@ -12,17 +12,20 @@
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild-->
-    
-  <link rel="import" href="bower_components/app-router/app-router.html">
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents.min.js -->
-  <script src="bower_components/webcomponentsjs/webcomponents.js"></script> 
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/fabric/dist/fabric.min.js"></script>
+
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <script src="bower_components/firebase/firebase.js"></script>
   <!-- endbuild -->    
     
   <!-- build:vulcanized elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endbuild-->
     
+  <link rel="import" href="bower_components/app-router/app-router.html">
 
 </head>
 
@@ -39,7 +42,6 @@
        </app-router>
   </div>
     
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
