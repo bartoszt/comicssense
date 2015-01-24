@@ -89,7 +89,7 @@
           
         onLogin : function() {
             this.globals.currentUser = this.user; 
-            console.log("user logged")
+            document.querySelector('app-router').go('/scene');
         },
         onLoginError : function (err) {
             console.log("An error occured.", err);
