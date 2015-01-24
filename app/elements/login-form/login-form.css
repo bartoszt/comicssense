@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+#registerForm {
+    display:none;
+} 
+.register-state #registerForm {
+    display:block;
+} 
+.register-state #loginForm {
+    display:none;
+}

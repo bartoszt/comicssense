@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
+
+<polymer-element name="login-form" attributes="">
+    <template>        
+        <link rel="stylesheet" href="login-form.css">
+        
+        <div id="loginFormWrapper">
+            <form id="loginForm" layout horizontal center>
+                <label for="loginInput">E-mail</label>
+                <input type="text" id="loginInput" name="{{email}}" placeholder="E-mail address" />
+
+                <label for="passwordInput">Password</label>
+                <input type="password" id="passwordInput" name="{{password}}" placeholder="Password" />
+
+                <input type="submit" value="Sign in" on-click="{{signinAction}}" />
+                <input type="button" value="Registration" on-click="{{switchViewAction}}"  />
+            </form>
+
+            <form id="registerForm" layout horizontal center>
+                <label for="loginInput">Email</label>
+                <input type="text" id="loginInput" name="{{email}}" placeholder="E-mail address" />
+
+                <label for="passwordInput">Password</label>
+                <input type="password" id="passwordInput" name="{{password}}" placeholder="Password" />
+
+                <input type="submit" value="Register" on-click="{{registerAction}}" />
+                <input type="button" value="Sign in" on-click="{{switchViewAction}}" />
+            </form>
+        </div>
+    </template>
+    <script>
+    (function () {
+
+      Polymer({
+        domReady : function () {        
+        },
+        signinAction : function () {
+            console.log("Logging");
+            return false;
+        },
+        registerAction : function () {
+            console.log("Register");
+            return false;
+        },
+        switchViewAction : function () {         
+            $(this.$.loginFormWrapper).toggleClass('register-state');
+        }
+      });
+
+    })();
+    </script>
+</polymer-element>
