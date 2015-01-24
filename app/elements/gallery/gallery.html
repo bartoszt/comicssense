@@ -1,0 +1,21 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
+
+
+<polymer-element name="gallery" attributes="">
+    <template> 
+        <div>Gallery </div>
+        
+    </template>
+    <script>
+    (function () {
+        
+       Polymer({
+            
+           var ref = new Firebase("https://comicsense.firebaseio.com/comicsense");
+           console.log(ref);
+
+       });
+    })();
+    </script>
+</polymer-element>
