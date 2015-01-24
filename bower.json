@@ -1,0 +1,18 @@
+{
+  "name": "ComicSense",
+  "version": "0.0.0",
+  "authors": [
+    "Bartosz Tupta <btupta@infusion.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.4"
+  }
+}
