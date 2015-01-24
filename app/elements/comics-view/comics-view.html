@@ -4,7 +4,8 @@
 
 
 <polymer-element name="comics-view">
-    <template> 
+    <template>         
+        <pvc-globals values="{{globals}}"></pvc-globals>
         <style>
         .comicsTemplate {
             width:100%;
@@ -59,17 +60,18 @@
 
                 <div class="comicsTemplate">
                     <div class="comicsTemplateItem {{status[0]}}" on-click="{{editScene}}" data-scenenr="0">
-                         {{data.scenes[0].image}}
+                         <html-echo html="{{data.scenes[0].image}}"></html-echo>
                     </div>            
                     <div class="comicsTemplateItem {{status[1]}}" on-click="{{editScene}}" data-scenenr="1">                
-                        {{data.scenes[1].image}}
+                        <html-echo html="{{data.scenes[1].image}}"></html-echo>
                     </div>            
                     <div class="comicsTemplateItem {{status[2]}}" on-click="{{editScene}}" data-scenenr="2">                
-                        {{data.scenes[2].image}}
+                        <html-echo html="{{data.scenes[2].image}}"></html-echo>
                     </div>
                 </div>
             </div>
         </section>
+                
         
     </template>
     
@@ -100,13 +102,14 @@
           
                     
           loadCurrentComics : function () {              
-              $(this.$.comicsView).addClass('inProgress');
               
               this.oneItemIsAvailable = false;
               this.oneItemIsInProgress = false; 
               
               if(this.data) {
                   var _self = this;
+                  $(this.$.comicsView).addClass('inProgress');
+                  
                   console.log("loading current project"); 
                   $(this.$.comicsInProgress).find('.comicsTemplateItem').each(function(i){ 
                       if (_self.data.scenes[i].f_done) {
@@ -128,26 +131,28 @@
               }
           },
           
-          createNewComicsAction : function () {
+          createNewComicsAction : function () {                
+            _self = this;
+              
             var newComics = {
-                title : this.title,
+                title : _self.title,
                 scenes : {
                     '0' : {
-                        author : 'globals.currentUser.auth.uid',
+                        author : _self.globals.currentUser.auth.uid,
                         date : '',
                         image : '',
                         f_inprogress : false,
                         f_done : false
                     },
                     '1' : {
-                        author : 'globals.currentUser.auth.uid',
+                        author : _self.globals.currentUser.auth.uid,
                         date : '',
                         image : '',
                         f_inprogress : false,
                         f_done : false
                     },
                     '2' : {
-                        author : 'globals.currentUser.auth.uid',
+                        author : _self.globals.currentUser.auth.uid,
                         date : '',
                         image : '',
                         f_inprogress : false,
@@ -163,7 +168,10 @@
               var sceneNr = target.dataset.scenenr;
               //test 
               if($(e.toElement).hasClass('available')) {
-                  this.data.scenes[sceneNr].f_inprogress = true;                  
+                  this.data.scenes[sceneNr].f_inprogress = true; 
+                  this.globals.sceneEditorActivate = true;
+                  this.globals.sceneEditorNumber = sceneNr;
+                  
                   var test = this.$.base.commit(); 
               }
           }

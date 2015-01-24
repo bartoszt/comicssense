@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
 
-<polymer-element name="scene-editor">
+<polymer-element name="scene-editor" attributes="sceneNr activate">
   <template>
     <style>
     :host {
@@ -28,23 +28,25 @@
       height: 100px;
     }
     </style>
-  <div class="holder" id="dragArea" >
-    <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
-  </div>
+    <section id="sceneEditor" hidden?={{!activate}}>
+      <div class="holder" id="dragArea" >
+        <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
+      </div>
 
-  <div id="btns" class="buttons">
-    <!-- TO BE DONE - widget for asseiejts -->
-  <input type="image" class="asset" src="/assets/as1.png" alt="hopek" dragabble="true" />
-  <input type="image" class="asset" src="/assets/as2.png" dragabble="true" />
-  <input type="image" class="asset" src="/assets/as3.png" alt="gwiazdka" dragabble="true" />
-  <input type="image" class="bg" src="/assets/b1.png" dragabble="true" />
-  <input type="image" class="bg" src="/assets/b2.jpg" dragabble="true" />
-  <input type="image" class="cloud" src="/assets/c1.jpeg" dragabble="true" />
-  <input type="image" class="cloud" src="/assets/cloud2.svg" dragabble="true" />
-  
-  <button type="reset" id="reset" >Clear</button>
-  <button type="submit" id="save" >Save</button>
-  </div>
+      <div id="btns" class="buttons">
+        <!-- TO BE DONE - widget for asseiejts -->
+      <input type="image" class="asset" src="/assets/as1.png" alt="hopek" dragabble="true" />
+      <input type="image" class="asset" src="/assets/as2.png" dragabble="true" />
+      <input type="image" class="asset" src="/assets/as3.png" alt="gwiazdka" dragabble="true" />
+      <input type="image" class="bg" src="/assets/b1.png" dragabble="true" />
+      <input type="image" class="bg" src="/assets/b2.jpg" dragabble="true" />
+      <input type="image" class="cloud" src="/assets/c1.jpeg" dragabble="true" />
+      <input type="image" class="cloud" src="/assets/cloud2.svg" dragabble="true" />
+
+      <button type="reset" id="reset" >Clear</button>
+      <button type="submit" id="save" >Save</button>
+      </div>
+    </section>
     <pvc-globals values="{{globals}}"></pvc-globals>
     <firebase-element id="fbase" location="https://comicsense.firebaseio.com/currentComics" data="{{data}}" keys="{{keys}}" log="true" ></firebase-element>
    
@@ -59,6 +61,10 @@
 
     allowDropAction: function(ev) {
       ev.originalEvent.preventDefault();
+    },
+      
+    observe : {
+        'activate' : 'ready'
     },
 
     dragAction: function(ev) {
@@ -194,20 +200,22 @@
 
 
     ready: function() {
-      this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
-      //to have a more głobał accesss
-      this.$.c1.fabric = this.canvas;
-      this.$.c1.clouds = {};
+      if(this.activate) {
+          this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
+          //to have a more głobał accesss
+          this.$.c1.fabric = this.canvas;
+          this.$.c1.clouds = {};
 
-      //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
-      this.prepareBoardAction();
+          //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
+          this.prepareBoardAction();
 
-      $(this.$.dragArea).on("drop", this.dropAction);
-      $(this.$.dragArea).on("dragover", this.allowDropAction);
-      $(this.$.btns).find("input").on("dragstart", this.dragAction);
-      $(this.$.btns).find("button#reset").click(this.clearBoardAction);
-      $(this.$.btns).find("button#save").click(this.saveAction);
-      _self = this;
+          $(this.$.dragArea).on("drop", this.dropAction);
+          $(this.$.dragArea).on("dragover", this.allowDropAction);
+          $(this.$.btns).find("input").on("dragstart", this.dragAction);
+          $(this.$.btns).find("button#reset").click(this.clearBoardAction);
+          $(this.$.btns).find("button#save").click(this.saveAction);
+          _self = this;
+      }
     }
 
   });
