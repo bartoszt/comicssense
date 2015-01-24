@@ -2,19 +2,64 @@
 <link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
 
 
-<polymer-element name="gallery" attributes="">
-    <template> 
-        <div>Gallery </div>
-        
-    </template>
+<polymer-element name="gallery-view" attributes="">
+ 
+    <template>
+    <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/"></firebase-element>
+      <input id="test" type="text" value="{{data}}" on-change="{{testFunc}}" />
+      <p>{{data.comics[0].author}}</p>
+    </template>  
     <script>
     (function () {
         
-       Polymer({
-            
-           var ref = new Firebase("https://comicsense.firebaseio.com/comicsense");
-           console.log(ref);
-
+       Polymer({ 
+          domReady : function () {
+              this.data = {"comics": 
+                    [ 
+                        {
+                            "author": "Monika",
+                            "title": "My comic",
+                            "scenes": 
+                               [ 
+                                    {   
+                                        "image": "scene1.svg",
+                                        "author": "Mateusz",
+                                        "title": "Intro scene",
+                                        "data": "2015-01-12"
+                                    }, 
+                                    {   
+                                        "image": "scene2.svg",
+                                        "author": "Marcin",
+                                        "title": "scene 2",
+                                        "data": "2015-01-12"
+                                    }
+                                ]
+                        },
+                        {
+                            "author": "Monika",
+                            "title": "My comic",
+                            "scenes": [ 
+                                    {   
+                                        "image": "scene1.svg",
+                                        "author": "Mateusz",
+                                        "title": "Intro scene",
+                                        "data": "2015-01-12"
+                                    }, 
+                                    {   
+                                        "image": "scene2.svg",
+                                        "author": "Marcin",
+                                        "title": "scene 2",
+                                        "data": "2015-01-12"
+                                    }
+                                ]
+                        }
+                    ]
+                };            
+              this.$.base.push();
+          },
+          testFunc : function () {              
+              this.$.base.push();
+          }
        });
     })();
     </script>
