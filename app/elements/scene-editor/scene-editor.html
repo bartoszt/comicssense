@@ -39,6 +39,8 @@
   <input type="image" class="bg" src="/assets/b1.png" dragabble="true" />
   <input type="image" class="bg" src="/assets/b2.jpg" dragabble="true" />
   <input type="image" class="cloud" src="/assets/c1.jpeg" dragabble="true" />
+  <input type="image" class="cloud" src="/assets/cloud2.svg" dragabble="true" />
+  
   <button type="reset" id="reset" >Clear</button>
   <button type="submit" id="save" >Save</button>
   </div>
@@ -67,8 +69,8 @@
         console.log("drag");
     },
     setTextPosition: function(id) {
-      text = clouds[id]['text'];
-      img = clouds[id]['img']
+      text = _self.$.c1.clouds[id]['text'];
+      img = _self.$.c1.clouds[id]['img']
       text.setAngle(img.getAngle());
       text.setLeft(img.getLeft() + (img.getWidth() - text.getWidth())/2);
       text.setTop(img.getTop() + 30);
@@ -78,9 +80,11 @@
         ev.originalEvent.preventDefault();
         var data = ev.originalEvent.dataTransfer.getData("text");
         data = JSON.parse(data);
-        console.log(data.src);
+        console.log("Ofsety X: "+ev.originalEvent.offsetX+" Y: "+ev.originalEvent.offsetY);
         if(data.type == "bg") {
           _self.insertBackgroundAction(data.src);
+        } else if(data.type == "cloud") {
+          _self.insertCloudAction(data.src);
         } else {
           _self.insertItemAction(data.src, ev.originalEvent.offsetX,ev.originalEvent.offsetY );
         }
@@ -115,37 +119,37 @@
       
         img.on({
           'selected' : function(){
-            if ( !(id in clouds) ){
+            if ( !(id in _self.$.c1.clouds) ){
               var text = new fabric.IText("Write your text", {
                   fontFamily: 'Comic Sans',
                 fontSize: 20
               });
-              clouds[id] = {};
-              clouds[id]['text'] = text 
-              clouds[id]['img'] = img
-              clouds[id]['clicked'] = 1
-              setTextPosition(id);  
+              _self.$.c1.clouds[id] = {};
+              _self.$.c1.clouds[id]['text'] = text 
+              _self.$.c1.clouds[id]['img'] = img
+              _self.$.c1.clouds[id]['clicked'] = 1
+              _self.setTextPosition(id);  
                       
                       text.setWidth(10);
-              canvas.add(text);  
+              _self.$.c1.fabric.add(text);  
             }
-            clouds[id]['clicked'] += 1
-            if (clouds[id]['clicked'] > 1){
-              var text =  clouds[id]['text']
-                  canvas.setActiveObject(text);
+             _self.$.c1.clouds[id]['clicked'] += 1
+            if (_self.$.c1.clouds[id]['clicked'] > 1){
+              var text =  _self.$.c1.clouds[id]['text']
+                  _self.$.c1.fabric.setActiveObject(text);
                   text.selectAll();
                   text.enterEditing();  
             }
           },
           'modified' : function(){
-            setTextPosition(id);
-            canvas.renderAll();
-            clouds[id]['clicked'] = 0;
-            canvas.setActiveObject(text);
-            canvas.setActiveObject(img);
+            _self.setTextPosition(id);
+            _self.$.c1.fabric.renderAll();
+             _self.$.c1.clouds[id]['clicked'] = 0;
+            _self.$.c1.fabric.setActiveObject(text);
+            _self.$.c1.fabric.setActiveObject(img);
           }
         })
-        canvas.add(img);
+        _self.$.c1.fabric.add(img);
         });      
     },
 
