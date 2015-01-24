@@ -24,7 +24,7 @@
                 }
                 _self.timer = setInterval(function () {
                     _self.s = pad(++(_self.sec) % 60);
-                    _self.m = $('#minutes').innerHTML = pad(parseInt((_self.sec) / 60, 10));
+                    _self.m = pad(parseInt((_self.sec) / 60, 10));
                 }, 1000);
                 
                 setTimeout(function () {
