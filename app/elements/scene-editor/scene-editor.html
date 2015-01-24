@@ -1,0 +1,140 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="scene-editor">
+  <template>
+    <style>
+    :host {
+      display: block;
+      position: relative;
+      background-color: white;
+      width: 100%;
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+    .holder {
+      text-align: center;
+    }
+    .holder canvas {
+      margin: 0 auto;
+      bordeR: solid 1px #888;
+    }
+    .buttons {
+      clear: both;
+      margin-top: 3em;
+    }
+    input[type="image"] {
+      width: 100px;
+      height: 100px;
+    }
+    </style>
+  <div class="holder" id="dragArea" >
+    <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
+  </div>
+  <div id="btns" class="buttons">
+    <!-- TO BE DONE - widget for asseiejts -->
+  <input type="image" class="asset" src="/Editor/assets/as1.png" alt="hopek" dragabble="true" />
+  <input type="image" class="asset" src="/Editor/assets/as2.png" dragabble="true" />
+  <input type="image" class="asset" src="/Editor/assets/as3.png" alt="gwiazdka" dragabble="true" />
+  <input type="image" class="bg" src="/Editor/assets/b1.png" dragabble="true" />
+  <input type="image" class="bg" src="/Editor/assets/b2.jpg" dragabble="true" />
+
+  <button type="reset" id="reset" >Clear</button>
+  <button type="submit" id="save" >Save</button>
+  </div>
+    
+    
+  </template>
+  <script>
+  Polymer({
+    canvas: null,
+    cwidth: 800,
+    cheight: 450,
+    _self: null,    
+    allowDropAction: function(ev) {
+      ev.originalEvent.preventDefault();
+    },
+
+    dragAction: function(ev) {
+        console.log(ev);
+        var type = "asset";
+        if($(ev.originalEvent.target).hasClass("bg")) {
+            type = "bg";
+        } if($(ev.originalEvent.target).hasClass("cloud")) { 
+            type = "cloud";
+        }
+        ev.originalEvent.dataTransfer.setData("text", '{"src": "'+ev.originalEvent.target.src+'","type":"'+type+'"}');
+        console.log("drag");
+    },
+
+    dropAction: function(ev) {
+        ev.originalEvent.preventDefault();
+        var data = ev.originalEvent.dataTransfer.getData("text");
+        data = JSON.parse(data);
+        console.log(data.src);
+        if(data.type == "bg") {
+          _self.insertBackgroundAction(data.src);
+        } else {
+          _self.insertItemAction(data.src, ev.originalEvent.offsetX,ev.originalEvent.offsetY );
+        }
+        
+    },
+    insertBackgroundAction: function(url) {
+        fabric.Image.fromURL(url, function(oImg) {
+          console.log(" jestem tu");
+          oImg.set({width: _self.$.c1.width, height: _self.$.c1.height, top: 0, left: 0});
+          _self.$.c1.fabric.setBackgroundColor(
+              {
+                source: url,
+                repeat: 'no-repeat'
+              },
+              _self.$.c1.fabric.renderAll.bind(_self.$.c1.fabric)
+            );
+          //or add item in bg replacing existing so you can fit it in.
+          /*_self.$.c1.fabric.add(oImg)
+          _self.$.c1.fabric.sendToBack(oImg);*/
+        });
+    },
+    insertItemAction: function(url, x, y) {
+        fabric.Image.fromURL(url, function(oImg) {
+          oImg.set({width: 50, height: 50, top: x, left: y});
+          _self.$.c1.fabric.add(oImg)
+        });
+    },
+
+
+    prepareBoardAction: function() {
+      this.canvas.selectionColor = 'rgba(0,255,0,0.3)';
+      this.canvas.selectionBorderColor = 'red';
+      this.canvas.selectionLineWidth = 5;
+      this.canvas.renderAll();
+    },
+
+    clearBoardAction: function(ev) {
+        _self.$.c1.fabric.clear();
+        _self.prepareBoardAction();
+    },
+    saveAction: function(ev) {
+      var scene = _self.$.c1.fabric.toSVG();
+      console.log(scene);
+    },
+
+
+    ready: function() {
+      this.canvas = new fabric.Canvas(this.$.c1 , { backgroundColor: "#9ff" });
+      this.$.c1.fabric = this.canvas;
+
+      //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
+      this.prepareBoardAction();
+
+      $(this.$.dragArea).on("drop", this.dropAction);
+      $(this.$.dragArea).on("dragover", this.allowDropAction);
+      $(this.$.btns).find("input").on("dragstart", this.dragAction);
+      $(this.$.btns).find("button#reset").click(this.clearBoardAction);
+      $(this.$.btns).find("button#save").click(this.saveAction);
+      _self = this;
+    }
+
+  });
+
+  </script>
+</polymer-element>
