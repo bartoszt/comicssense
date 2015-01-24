@@ -32,7 +32,6 @@
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>
-
       <div id="btns" class="buttons">
         <!-- TO BE DONE - widget for asseiejts -->
       <input type="image" class="asset" src="/assets/as1.png" alt="hopek" dragabble="true" />
@@ -85,7 +84,9 @@
           0: {
             image: this.canvas.toSVG(),
             author: id,
-            data: date.toDateString()
+            f_done: false,
+            f_inprogress: true,
+            date: date.toDateString()
           }
 
         }
@@ -126,15 +127,13 @@
               },
               _self.$.c1.fabric.renderAll.bind(_self.$.c1.fabric)
             );
-          //or add item in bg replacing existing so you can fit it in.
-          /*_self.$.c1.fabric.add(oImg)
-          _self.$.c1.fabric.sendToBack(oImg);*/
+
           _self.autoSaveSceneAction();
         });
     },
     insertItemAction: function(url, x, y) {
         fabric.Image.fromURL(url, function(oImg) {
-          oImg.set({width: 50, height: 50, top: x, left: y});
+          oImg.set({width: 100, height: 100});
           _self.$.c1.fabric.add(oImg)
         });
         _self.autoSaveSceneAction();
@@ -185,7 +184,8 @@
     prepareBoardAction: function() {
       this.canvas.selectionColor = 'rgba(0,255,0,0.3)';
       this.canvas.selectionBorderColor = 'red';
-      this.canvas.selectionLineWidth = 5;
+      this.canvas.selectionLineWidth = 3;
+      this.canvas.setBackgroundColor("#9ff");
       this.canvas.renderAll();
     },
 
@@ -194,8 +194,18 @@
         _self.prepareBoardAction();
     },
     saveAction: function(ev) {
-      var scene = _self.$.c1.fabric.toSVG();
-      console.log(scene);
+        var item = { 
+            sceneNr : {
+              image: _self.$.c1.fabric.toSVG(),
+              author: "anonymous guest",
+              f_done: true,
+              f_inprogress: false,
+              date: date.toDateString()
+            }
+          }
+        _self.data.scenes = item;
+        console.log("robie end sejwa");      
+
     },
 
 
