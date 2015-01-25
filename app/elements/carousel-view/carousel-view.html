@@ -1,0 +1,99 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
+
+<link rel="import" href="../html-echo/html-echo.html">
+
+<polymer-element name="carousel-view" attributes="">
+    <template>
+        <style>
+           #bxslider {
+               margin: 0;
+               padding: 0;
+            }
+           #bxslider li{
+               width: 100%;
+               //height: 700px;
+           }
+            #bxslider li img{
+               width: 100%;
+               height: auto;
+           }
+            #bxslider {
+                width:1200px;
+                height:100%;
+                margin:0 auto;
+            }
+
+            #bxslider h2, #bxslider h1, #bxslider p {
+                color:#fff;
+            }
+            #bxslider .content-wrapper {
+                position: absolute;
+                top: 70px;
+                left: 200px;
+            }
+            #bxslider h2 {
+                font-size:36px; 
+                margin-bottom:27px;
+            }
+           #bxslider h1 {
+                font-size:48px;
+                margin-top:0; 
+               width: 800px;
+               line-height: 52px;
+            }
+            #bxslider p {
+                font-size:18px;
+                line-height:26px;
+                opacity:0.7;
+                max-width:55%;
+            }
+
+        </style>
+        <section class="comicsInfo">
+            
+        </section>
+       <ul id="bxslider">
+          <li>
+            <div class="content-wrapper">
+                <h2>Creating and sharing</h2>
+                <h1>1. First choose the strip</h1>
+                <p>Once you start editing, others in your web circle can see it, comment and share their opinion</p>
+            </div>
+            <img src="../../images/comics-info-bg.png" title="First choose the strip" />
+           </li>
+          <li>
+              
+              <img src="../../images/comics-info-bg2.png" title="Then drag characters into active area" />
+              <div class="content-wrapper">
+                <h2>Creating and sharing</h2>
+                <h1>2. Then drag characters into active area</h1>
+              </div>
+           </li>
+          <li>
+              <img src="../../images/comics-info-bg3.png" title=" Add the text, once you finished hit save and let others take over" />
+              <div class="content-wrapper">
+                <h2>Creating and sharing</h2>
+                <h1>3. Add the text, once you finished hit save and let others take over. </h1>
+              </div>
+           </li>
+        </ul>
+        
+    </template>  
+    
+    <script>
+    (function () {
+       Polymer({ 
+          domReady : function () {
+              $(this.$.bxslider).bxSlider({
+                  mode: 'fade',
+                  auto: true,
+                  pager: false,
+                  controls: false,
+                  speed: 50,
+                });
+          }
+       });
+    })();
+    </script>
+</polymer-element>
