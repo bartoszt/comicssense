@@ -1,0 +1,43 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
+
+<link rel="import" href="../html-echo/html-echo.html">
+
+<polymer-element name="comic-preview" attribute="id">
+    <template>
+        <style>
+        #comicPreview {
+            overflow: hidden;
+        }
+        #comicPreview div{
+            width: 300px;
+            height: 300px;
+            float: left;
+        }
+        </style>
+        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/" ></firebase-element>
+        <article>
+            <h1>{{data.comics[id].author}}</h1>
+            <h2>{{data.comics[id].title}}</h2>
+            <h2></h2>
+            <section id="comicPreview">
+                <template repeat="{{scene in data.comics[id].scenes}}">
+                    <div>
+                        <html-echo html="{{scene.image}}"></html-echo>
+                    </div>
+                </template>
+            </section>
+        </article>
+    </template>  
+    <script>
+    (function () {
+       Polymer({ 
+           id: null,
+           ready : function () {
+                 _self = this;
+                 _self.id= location.hash.split('/').pop();
+              },
+       });
+    })();
+    </script>
+</polymer-element>
