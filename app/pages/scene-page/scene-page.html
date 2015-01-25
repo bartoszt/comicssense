@@ -21,9 +21,10 @@
         <pvc-globals values="{{globals}}"></pvc-globals>
         <session-required></session-required>
         
-        <section class="scenePage">
+        <section class="scenePage"> 
             <comics-view></comics-view>
-            <scene-editor activate="{{globals.sceneEditorActivate}}" sceneNr="{{globals.sceneEditorNumber}}" hidden?={{!globals.sceneEditorActivate}}></scene-editor>
+            <scene-editor hidden?={{!globals.sceneEditorActivate}}></scene-editor>
+            
 
             <user-list class="clearfix"></user-list>
         </section>

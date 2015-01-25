@@ -28,7 +28,7 @@
       height: 100px;
     }
     </style>
-    <section id="sceneEditor" hidden?={{!activate}}>
+    <section id="sceneEditor">
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>
@@ -48,13 +48,13 @@
       </div>
     </section>
     <pvc-globals values="{{globals}}"></pvc-globals>
-    <firebase-element id="fbase" location="https://comicsense.firebaseio.com/currentComics" data="{{data}}" keys="{{keys}}" log="true" ></firebase-element>
+    <firebase-element id="fbase" on-observe="{{ready}}" location="https://comicsense.firebaseio.com/currentComics" data="{{data}}" keys="{{keys}}" log="true" ></firebase-element>
    
   </template>
   <script>
   Polymer({
     canvas: null,
-    cwidth: 399,
+    cwidth: 390,
     cheight: 500,
     _self: null,
     data: null,
@@ -63,6 +63,9 @@
       ev.originalEvent.preventDefault();
     },
        
+    domReady : function() {
+        this.ready();
+    },
 
     dragAction: function(ev) {
         //console.log(ev);
@@ -190,6 +193,7 @@
 
     clearBoardAction: function(ev) {
         _self.$.c1.fabric.clear();
+        _self.$.c1.fabric.setBackgroundColor('', _self.$.c1.fabric.renderAll.bind(canvas));
         _self.prepareBoardAction();
     },
     saveAction: function(ev) {
@@ -208,24 +212,25 @@
 
     },
 
-
-    domReady: function() {
-      if(this.activate) {
+     
+    ready : function() { 
+      if(this.globals.sceneEditorActivate) { 
           this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
           //to have a more głobał accesss
           this.$.c1.fabric = this.canvas;
-          this.$.c1.fabric.clear();
+          
           this.$.c1.clouds = {};
            
           //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
           this.prepareBoardAction();
-
           $(this.$.dragArea).on("drop", this.dropAction);
           $(this.$.dragArea).on("dragover", this.allowDropAction);
           $(this.$.btns).find("input").on("dragstart", this.dragAction);
           $(this.$.btns).find("button#reset").click(this.clearBoardAction);
           $(this.$.btns).find("button#save").click(this.saveAction);
           _self = this;
+          this.clearBoardAction();
+
       }
     }
 
