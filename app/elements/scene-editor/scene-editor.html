@@ -59,7 +59,7 @@
     <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
     <section id="sceneEditor">
       <h1>Edit scene</h1>
-      <counter-view sceneNr={{sceneNr}} starttimer="true"></counter-view>
+      
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>
@@ -94,9 +94,13 @@
     allowDropAction: function(ev) {
       ev.originalEvent.preventDefault();
     },
-       
-    domReady : function() {
-        this.start = true;
+
+    setTextPosition: function(id) {
+      text = _self.$.c1.clouds[id]['text'];
+      img = _self.$.c1.clouds[id]['img']
+      text.setAngle(img.getAngle());
+      text.setLeft(img.getLeft() + (img.getWidth() - text.getWidth())/2);
+      text.setTop(img.getTop() + 30);
     },
 
     dragAction: function(ev) {
@@ -110,41 +114,6 @@
         ev.originalEvent.dataTransfer.setData("text", '{"src": "'+ev.originalEvent.target.src+'","type":"'+type+'"}');
         console.log("drag");
     },
-    cutAsset: function() {
-      this.canvas.fxRemove(this.canvas.getActiveObject());
-      this.autoSaveSceneAction();
-    },
-    flipAsset: function() {
-      var obj = this.canvas.getActiveObject();
-      if(obj) {
-        obj.set("flipX", true);
-        this.canvas.renderAll();
-      }
-    },
-      
-    autoSaveSceneAction: function() {
-        _self = this;
-        var date = new Date();
-        var item =
-            {  
-                image: _self.canvas.toSVG(),
-                author_id: _self.globals.currentUser.auth.uid,
-                author: _self.globals.currentUser.nickname,
-                f_inprogress: true,
-                f_done: false,
-                data: date.toDateString() 
-            }
-        _self.data.scenes[_self.globals.sceneEditorNumber] = item; 
-        _self.$.fbase.commit();
-    },
-    setTextPosition: function(id) {
-      text = _self.$.c1.clouds[id]['text'];
-      img = _self.$.c1.clouds[id]['img']
-      text.setAngle(img.getAngle());
-      text.setLeft(img.getLeft() + (img.getWidth() - text.getWidth())/2);
-      text.setTop(img.getTop() + 30);
-    },
-
     dropAction: function(ev) {
         ev.originalEvent.preventDefault();
         var data = ev.originalEvent.dataTransfer.getData("text");
@@ -219,6 +188,36 @@
         });      
         _self.autoSaveSceneAction();
     },
+
+
+    cutAsset: function() {
+      this.canvas.fxRemove(this.canvas.getActiveObject());
+      this.autoSaveSceneAction();
+    },
+    flipAsset: function() {
+      var obj = this.canvas.getActiveObject();
+      if(obj) {
+        obj.set("flipX", true);
+        this.canvas.renderAll();
+      }
+    },
+      
+    autoSaveSceneAction: function() {
+        _self = this;
+        var date = new Date();
+        var item =
+            {  
+                image: _self.canvas.toSVG(),
+                author_id: _self.globals.currentUser.auth.uid,
+                author: _self.globals.currentUser.nickname,
+                f_inprogress: true,
+                f_done: false,
+                data: date.toDateString() 
+            }
+        _self.data.scenes[_self.globals.sceneEditorNumber] = item; 
+        _self.$.fbase.commit();
+    },
+
 
 
     prepareBoardAction: function() {
