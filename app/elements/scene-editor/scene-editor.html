@@ -68,7 +68,7 @@
     },
 
     dragAction: function(ev) {
-        console.log(ev);
+        //console.log(ev);
         var type = "asset";
         if($(ev.originalEvent.target).hasClass("bg")) {
             type = "bg";
@@ -78,20 +78,22 @@
         ev.originalEvent.dataTransfer.setData("text", '{"src": "'+ev.originalEvent.target.src+'","type":"'+type+'"}');
         console.log("drag");
     },
+      
     autoSaveSceneAction: function() {
         var date = new Date();
-        var id = "globals.currentUser.auth.uid";
-        var item = { 
-          0: {
-            image: this.canvas.toSVG(),
-            author: id,
-            data: date.toDateString()
-          }
-
-        }
+        var id = _self.globals.currentUser.auth.uid;
+        var item =
+            {  
+                image: this.canvas.toSVG(),
+                author_id: id,
+                author: "kaka",
+                f_inprogress: true,
+                f_done: false,
+                data: date.toDateString() 
+            }
       //get global current id ?
-        _self.data.scenes = item;
-        console.log("robie nieby sejwa?");
+        _self.data.scenes[_self.globals.sceneEditorNumber] = item; 
+        _self.$.fbase.commit();
     },
     setTextPosition: function(id) {
       text = _self.$.c1.clouds[id]['text'];
@@ -112,8 +114,7 @@
           _self.insertCloudAction(data.src);
         } else {
           _self.insertItemAction(data.src, ev.originalEvent.offsetX,ev.originalEvent.offsetY );
-        }
-        
+        }        
     },
     insertBackgroundAction: function(url) {
         fabric.Image.fromURL(url, function(oImg) {
@@ -194,8 +195,19 @@
         _self.prepareBoardAction();
     },
     saveAction: function(ev) {
-      var scene = _self.$.c1.fabric.toSVG();
-      console.log(scene);
+        var date = new Date();
+        var item = {
+              author: "anonymous guest",
+              f_done: true,
+              f_inprogress: false,
+              date: date.toDateString(),
+              image: _self.$.c1.fabric.toSVG()
+            }
+        _self.data.scenes[_self.globals.sceneEditorNumber] = item;
+        _self.$.fbase.commit();     
+        
+        _self.globals.sceneEditorActivate = false;
+
     },
 
 
@@ -204,8 +216,9 @@
           this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
           //to have a more głobał accesss
           this.$.c1.fabric = this.canvas;
+          this.$.c1.fabric.clear();
           this.$.c1.clouds = {};
-
+           
           //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
           this.prepareBoardAction();
 
