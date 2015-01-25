@@ -2,7 +2,7 @@
 <link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-login.html">
 
-<polymer-element name="login-form" attributes="">
+<polymer-element name="login-form">
     <template>        
         <link rel="stylesheet" href="login-form.css">
          
@@ -190,7 +190,8 @@
         provider : {},
         onlineUserAdded : false,
           
-        domReady : function () {        
+        domReady : function () {  
+            console.log("STATUSKNOWN   "+ this.statusKnown);
         },
         signinAction : function () {        
             this.provider = "password";         
@@ -266,10 +267,7 @@
         },
           
         newOnlineUser : function () { 
-            if(!this.onlineUserAdded && !this.globals.currentUser.nickname && !this.globals.currentUser.auth.uid) {
-              this.$.userBase.push({username : this.globals.currentUser.nickname, uid : this.globals.currentUser.auth.uid});
-              this.onlineUserAdded = true;
-            }
+           
         }
       });
 

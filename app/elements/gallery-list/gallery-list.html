@@ -11,10 +11,11 @@
             }
              article section {
                  width: 48%;
-                 height: auto;
+                 height: 550px;
                  float: left;
                  margin-right: 2%;
                  margin-bottom: 15px;
+                 position:relative;
              }
             article section div{
                 width: 100%;
@@ -29,6 +30,7 @@
                 text-decoration: none;
                 margin: 10px 5px;
                 color: #1f6b72;
+                font-size:24px;
             }
             article section a:hover{
                 opacity: 0.7;
@@ -36,19 +38,30 @@
             article section svg{
                 width: 100%;
             }
+            span.author {
+                display:block;
+                font-size:12px;
+                position:absolute;
+                right:4px;
+                bottom:50px; 
+                transform: rotate(90deg); 
+                transform-origin: 100% 0;
+                z-index:2;
+            }
         </style>
-        <firebase-element id="base" data="{{data}}" keys="{{keys}}" location="https://comicsense.firebaseio.com/comicses" ></firebase-element>
+        <firebase-element id="base" data="{{data}}" keys="{{keys}}" location="https://comicsense.firebaseio.com/comicses"></firebase-element>
         <article>
             <template repeat="{{key, keyIndex in keys}}">
                 <section>
                     <div>
-                        <a href="#/comics/{{key}}"><html-echo html="{{data[key].comics.scenes[0].image}}"></html-echo></a>
+                        <a href="#/comics/{{keys[keys.length-keyIndex-1]}}"><html-echo html="{{data[keys[keys.length-keyIndex-1]].comics.scenes[0].image}}"></html-echo></a>
                     </div>
-                    <a class="title" href="#/comics/{{key}}">{{data[key].comics.title}}</a>
+                    <a class="title" href="#/comics/{{keys[keys.length-keyIndex-1]}}">{{data[keys[keys.length-keyIndex-1]].comics.title}}</a>
+                    <span class="author">{{data[keys[keys.length-keyIndex-1]].comics.scenes[0].author}} | {{data[keys[keys.length-keyIndex-1]].comics.scenes[1].author}} | {{data[keys[keys.length-keyIndex-1]].comics.scenes[2].author}}</span>
                 </section>
             </template>
         </article>
-        <p>{{data.comics[0].author}}</p>
+        
     </template>  
     <script>
     (function () {

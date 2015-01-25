@@ -10,14 +10,14 @@
 
         <pvc-globals values="{{globals}}"></pvc-globals>
 
-        <btn-logout on-click="{{logout}}" hidden?="{{!globals.currentUser}}"></btn-logout>
+        <btn-logout on-click="{{logoutUser}}" hidden?="{{!globals.currentUser}}"></btn-logout>
     
     </template>
     
     <script>
     (function () {
       Polymer({
-        logout : function () {  
+        logoutUser : function () {  
             this.provider = this.globals.currentUser.provider;
             this.removeOnlineUser();
             this.globals.currentUser = null;

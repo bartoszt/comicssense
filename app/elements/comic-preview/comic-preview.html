@@ -17,6 +17,7 @@
             border: 3px solid #000;
             border-radius: 6px;
             margin: 5px 3px 15px 0;
+            position:relative;
         }
          h3 {
             color: #3bb4be;
@@ -48,6 +49,16 @@
         article section svg{
             width: 100%;
         }
+        span.author {
+            display:block;
+            font-size:12px;
+            position:absolute;
+            right:4px;
+            bottom:0; 
+            transform: rotate(90deg); 
+            transform-origin: 100% 0;
+            z-index:2;
+        }
         </style>
         <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/comicses/{{pathArg1}}"></firebase-element>
         <pvc-globals values="{{globals}}"></pvc-globals>
@@ -58,10 +69,11 @@
             <section id="comicPreview">
                 <template repeat="{{scene in data.comics.scenes}}">
                     <div>
-                        <html-echo html="{{scene.image}}" class="html-echo"></html-echo>
+                        <html-echo html="{{scene.image}}" class="html-echo"></html-echo>    
+                        <span class="author">Created by {{scene.author}}</span>
                     </div>
                 </template>
-            </section>
+            </section> 
         </article>
     </template>  
     
