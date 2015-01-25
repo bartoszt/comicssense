@@ -29,10 +29,11 @@
     }
     </style>
     <section id="sceneEditor">
+      <counter-view starttimer="true"></counter-view>
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>
-
+        
       <div id="btns" class="buttons">
         <!-- TO BE DONE - widget for asseiejts -->
       <input type="image" class="asset" src="/assets/as1.png" alt="hopek" dragabble="true" />
@@ -58,13 +59,14 @@
     cheight: 500,
     _self: null,
     data: null,
-
+    start: null,
     allowDropAction: function(ev) {
       ev.originalEvent.preventDefault();
     },
        
     domReady : function() {
         this.ready();
+        this.start = true;
     },
 
     dragAction: function(ev) {
