@@ -1,8 +1,17 @@
  <polymer-element name="counter-view" attributes="starttimer">
     <template>
-        <div id="minutes">{{m}}</div>
-        <div id="seconds">{{s}}</div>
-        <button on-click="{{startTimer}}">Start</button>
+        <style>
+            .timer {
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+            #worked {
+               margin-left: 3px;
+            }
+        </style>
+        <section class="timer">Time to finish: <span id="worked">00:00</div></section>
+        
     </template>
     <script>
         Polymer('counter-view', {
@@ -21,7 +30,37 @@
                 console.log(_self.starttimer);
                 
             },
-            startTimer: function(){
+            domReady: function(){
+                
+               // var $worked = $("#worked");
+                 _self = this;   
+                function update() {
+                    var myTime = $(_self.$.worked).html();
+                    console.log(myTime);
+                    var ss = myTime.split(":");
+                    var dt = new Date();
+                    dt.setHours(0);
+                    dt.setMinutes(ss[0]);
+                    dt.setSeconds(ss[1]);
+
+                    var dt2 = new Date(dt.valueOf() + 1000);
+                    var temp = dt2.toTimeString().split(" ");
+                    var ts = temp[0].split(":");
+
+                    $(_self.$.worked).html(ts[1]+":"+ts[2]);
+                    if(ts[1] < 10) {
+                        setTimeout(update, 1000);
+                    }else {
+                        document.querySelector('app-router').go('/scene');
+                    }
+                }
+
+                setTimeout(update, 1000);
+                
+                
+                
+                
+                
                 /* var timer = new Timer();
                 console.log(timer);
                  timer.start(10);*/
