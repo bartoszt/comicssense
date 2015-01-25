@@ -2,6 +2,7 @@
     <template>
         <div id="minutes">{{m}}</div>
         <div id="seconds">{{s}}</div>
+        <button on-click="{{startTimer}}">Start</button>
     </template>
     <script>
         Polymer('counter-view', {
@@ -16,24 +17,30 @@
                    _self.timeout = setTimeout(function(){ alertify.error("Away too long"); }, 60000);
                 };
                 
-                function pad(val) {
+               
+                console.log(_self.starttimer);
+                
+            },
+            startTimer: function(){
+                /* var timer = new Timer();
+                console.log(timer);
+                 timer.start(10);*/
+                /* function pad(val) {
                     return val > 9 ? val : "0" + val;
                 };
-                console.log(_self.starttimer);
-                if(_self.starttimer){
                     _self.timer = setInterval(function () {
-                         _self.s = pad(++(_self.sec) % 60);
-                        $(this.$.minutes).text(pad(++(_self.sec) % 60));
-                        $(this.$.seconds).text(pad(parseInt((_self.sec) / 60, 10)));
-                       // _self.m = pad(parseInt((_self.sec) / 60, 10));
+                        _self.s = pad(++(_self.sec) % 60);
+                        //$(this.$.minutes).text(pad(++(_self.sec) % 60));
+                        //$(this.$.seconds).text(pad(parseInt((_self.sec) / 60, 10)));
+                       _self.m = pad(parseInt((_self.sec) / 60, 10));
+                        console.log(_self.s);
                     }, 1000);
 
                     setTimeout(function () {
                         clearInterval(_self.timer);
                         alertify.error("Time has passed");
-                    }, 600000);
+                    }, 600000); */
                 }
-            },
             
       });
     </script>
