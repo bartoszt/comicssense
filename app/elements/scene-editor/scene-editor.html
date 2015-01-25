@@ -72,6 +72,10 @@
       <div id="actions" class="buttons">
         <paper-button on-click="{{cutAsset}}" raised ><core-icon icon="content-cut" role="img"></core-icon>&nbsp;&nbsp;Cut</paper-button>
         <paper-button on-click="{{flipAsset}}" raised ><core-icon icon="swap-horiz" role="img"></core-icon>&nbsp;&nbsp;Flip</paper-button>
+        <paper-button on-click="{{frontAsset}}" raised ><core-icon icon="flip-to-front" role="img"></core-icon>&nbsp;&nbsp;Bring to front</paper-button>
+        <paper-button on-click="{{backAsset}}" raised ><core-icon icon="flip-to-back" role="img"></core-icon>&nbsp;&nbsp;Send to back</paper-button>
+        <div style="padding: 10px;"></div>
+
         <paper-button on-click="{{clearBoardAction}}" raised ><core-icon icon="delete" role="img"></core-icon>&nbsp;&nbsp;Clear</paper-button>
         <paper-button on-click="{{saveAction}}" raised ><core-icon icon="save" role="img"></core-icon>&nbsp;&nbsp;Save</paper-button>
       </div>
@@ -144,6 +148,8 @@
     insertItemAction: function(url, x, y) {
         fabric.Image.fromURL(url, function(oImg) {
           oImg.setPositionByOrigin(_self.cpoint, "center", "center");
+          oImg.set("meetOrSlice", "meet");
+          oImg.set("minScaleLimit", 0.5);
           _self.$.c1.fabric.add(oImg);
         });
         _self.autoSaveSceneAction();
@@ -197,10 +203,28 @@
     flipAsset: function() {
       var obj = this.canvas.getActiveObject();
       if(obj) {
-        obj.set("flipX", true);
+        obj.set("flipX", !obj.flipX);
         this.canvas.renderAll();
       }
+      this.autoSaveSceneAction();
     },
+    frontAsset: function() {
+      var obj = this.canvas.getActiveObject();
+      if(obj) {
+        obj.bringToFront();
+        this.canvas.renderAll();
+      }
+      this.autoSaveSceneAction();
+    },    
+
+    backAsset: function() {
+      var obj = this.canvas.getActiveObject();
+      if(obj) {
+        obj.sendToBack();
+        this.canvas.renderAll();
+      }
+      this.autoSaveSceneAction();
+    },    
       
     autoSaveSceneAction: function() {
         _self = this;
