@@ -6,12 +6,11 @@
     <template>        
         <link rel="stylesheet" href="login-form.css">
          
-        <firebase-login id="baseLogin" user="{{user}}" params="{{baseLoginParams}}" statusKnown="{{statusKnown}}" location="https://comicsense.firebaseio.com/users" provider="password" on-login="{{onLogin}}" on-error="{{onLoginError}}" on-user-created="{{userCreated}}"></firebase-login>
-        <firebase-login id="facebookLogin" user="{{user}}" statusKnown="{{statusKnown}}" location="https://comicsense.firebaseio.com/users" provider="facebook"></firebase-login>
-        <firebase-login id="githubLogin" user="{{user}}" statusKnown="{{statusKnown}}" location="https://comicsense.firebaseio.com/users" provider="github"></firebase-login>
-        <firebase-login id="googleLogin" user="{{user}}" statusKnown="{{statusKnown}}" location="https://comicsense.firebaseio.com/users" provider="google"></firebase-login>
-        <firebase-login id="twitterLogin" user="{{user}}" statusKnown="{{statusKnown}}" location="https://comicsense.firebaseio.com/users" provider="twitter"></firebase-login>
+        <firebase-login id="baseLogin" user="{{user}}" statusKnown="{{statusKnown}}" location="https://comicsense.firebaseio.com/" provider="{{provider}}" on-login="{{onLogin}}" on-error="{{onLoginError}}" on-user-created="{{userCreated}}"></firebase-login>
+       
    
+        <firebase-element id="userBase" location="https://comicsense.firebaseio.com/usersonline"></firebase-element>
+        
         <pvc-globals values="{{globals}}"></pvc-globals>
         
         <div id="loginFormWrapper" hidden?="{{!statusKnown || user}}">
@@ -46,18 +45,14 @@
                 <li><input type="button" value="Login with Github" on-click="{{signinGithub}}" /></li>
             </ul>
         </div>
-        <div id="loggedIn" hidden?="{{!statusKnown || !user}}">
-            Hello {{globals.currentUser.auth.uid}}!
-            <logout-form></logout-form>
-        </div>
     </template>
     <script>
     (function () {
 
       Polymer({  
-        statusKnown : true,
-        baseLoginParams : {},
         provider : {},
+        onlineUserAdded : false,
+          
         domReady : function () {        
         },
         signinAction : function () {        
@@ -65,7 +60,8 @@
             this.$.baseLogin.login({'email':this.email, 'password':this.password}, {'username' : this.email.split('@')[0]});     
             return false;
         },
-        registerAction : function () {             
+        registerAction : function () { 
+            this.provider = "password";            
             this.$.baseLogin.createUser(this.rEmail,this.rPassword);
             console.log('register log');
         },          
@@ -74,23 +70,28 @@
         },
           
         // sign in by Social hub  
-        signinFacebook : function () {      
-            this.$.facebookLogin.login({}, {'username' : this.email.split('@')[0]});
-            console.log('test');
+        signinFacebook : function () { 
+            this.provider = "facebook";
+            this.$.baseLogin.login(); 
         },
-        signinGoogle : function () {    
-            this.$.googleLogin.login();            
+        signinGoogle : function () {  
+            this.provider = "google";  
+            this.$.baseLogin.login();            
         },
-        signinGithub : function () {          
-            this.$.githubLogin.login();
+        signinGithub : function () {  
+            this.provider = "github";        
+            this.$.baseLogin.login();
         },
-        signinTwitter : function () {  
-            this.$.twitterLogin.login();
+        signinTwitter : function () { 
+            this.provider = "twitter"; 
+            this.$.baseLogin.login();
         },
           
         onLogin : function() {
             this.globals.currentUser = this.user; 
-            document.querySelector('app-router').go('/scene');
+            this.saveUserNickname();
+            this.newOnlineUser();
+            //document.querySelector('app-router').go('/scene');
         },
         onLoginError : function (err) {
             console.log("An error occured.", err);
@@ -100,7 +101,39 @@
         userCreated : function () {
             this.$.baseLogin.login({'email':this.rEmail, 'password':this.rPassword});   
             console.log("userCreated"); 
-        }        
+        },  
+          
+        saveUserNickname : function () {
+            switch(this.user.provider) {
+                case 'password':
+                    this.globals.currentUser.nickname = this.user.password.email.split("@")[0];
+                break;
+        
+                case 'google':
+                    this.globals.currentUser.nickname = this.user.google.cachedUserProfile.given_name;
+                break;
+        
+                case 'github':
+                    this.globals.currentUser.nickname = this.user.github.username;
+                break;
+        
+                case 'facebook':
+                    this.globals.currentUser.nickname = this.user.facebook.cachedUserProfile.first_name;
+                break;
+        
+                case 'twitter':
+                    this.globals.currentUser.nickname = this.user.twitter.username;
+                break;
+        
+            }
+        },
+          
+        newOnlineUser : function () { 
+            if(!this.onlineUserAdded) {
+              this.$.userBase.push({username : this.globals.currentUser.nickname, uid : this.globals.currentUser.auth.uid});
+              this.onlineUserAdded = true;
+            }
+        }
       });
 
     })();

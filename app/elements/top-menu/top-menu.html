@@ -1,16 +1,21 @@
  <polymer-element name="top-menu">
     <template>
-     <pvc-globals values="{{globals}}"></pvc-globals>
-     <nav>
-        <li><a href="">Gallery</a></li>
-        <li><logout-form></logout-form></li>
-     </nav>
+        <pvc-globals values="{{globals}}"></pvc-globals>
+        
+        <header>
+            <figure>
+                <a href="/#/gallery"><img src="image/logo.png" alt="Logo" /></a>
+            </figure>
+            <nav>
+                <li><a href="/#/gallery">Gallery</a></li>
+                <li><a href="/#/scene">Comics</a></li>
+                <li><logout-form></logout-form></li>
+            </nav>  
+        </header> 
     </template>
+
     <script>
-      Polymer({
-        attached: function() { 
-          
-        }
+      Polymer({ 
       });
     </script>
-  </polymer-element>
+</polymer-element>
