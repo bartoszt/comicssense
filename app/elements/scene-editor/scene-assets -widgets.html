@@ -167,36 +167,49 @@
                   <input type="image" class="asset" src="/assets/items/set1-40.png" alt="set1" dragabble="true" />  
             </div>
             <div id="tabs-4">
-                 <input type="image" class="asset" src="/assets/bgs/gradient-bg1.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/gradient-bg2.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/gradient-bg3.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/gradient-bg4.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/gradient-bg5.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/gradient-bg6.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/gradient-bg7.png" alt="set1" dragabble="true" />   
-                 <input type="image" class="asset" src="/assets/bgs/bg1.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/bg2.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/bg3.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/bg4.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/bg5.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/bg6.png" alt="set1" dragabble="true" />     
-                 <input type="image" class="asset" src="/assets/bgs/bg7.png" alt="set1" dragabble="true" /> 
+                 <input type="image" class="bg" src="/assets/bgs/gradient-bg1.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/gradient-bg2.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/gradient-bg3.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/gradient-bg4.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/gradient-bg5.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/gradient-bg6.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/gradient-bg7.png" alt="set1" dragabble="true" />   
+                 <input type="image" class="bg" src="/assets/bgs/bg1.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/bg2.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/bg3.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/bg4.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/bg5.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/bg6.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="bg" src="/assets/bgs/bg7.png" alt="set1" dragabble="true" /> 
             </div>
             <div id="tabs-5">
-                <input type="image" class="asset" src="/assets/clouds/speechbuble-01.png" alt="set1" dragabble="true" /> 
-                <input type="image" class="asset" src="/assets/clouds/speechbuble-02.png" alt="set1" dragabble="true" />   
-                <input type="image" class="asset" src="/assets/clouds/speechbuble-03.png" alt="set1" dragabble="true" />   
-                <input type="image" class="asset" src="/assets/clouds/thinkhbuble-01.png" alt="set1" dragabble="true" />   
-                <input type="image" class="asset" src="/assets/clouds/thinkhbuble-02.png" alt="set1" dragabble="true" />   
-                <input type="image" class="asset" src="/assets/clouds/thinkhbuble-03.png" alt="set1" dragabble="true" />   
+                <input type="image" class="cloud" src="/assets/clouds/speechbuble-01.png" alt="set1" dragabble="true" /> 
+                <input type="image" class="cloud" src="/assets/clouds/speechbuble-02.png" alt="set1" dragabble="true" />   
+                <input type="image" class="cloud" src="/assets/clouds/speechbuble-03.png" alt="set1" dragabble="true" />   
+                <input type="image" class="cloud" src="/assets/clouds/thinkhbuble-01.png" alt="set1" dragabble="true" />   
+                <input type="image" class="cloud" src="/assets/clouds/thinkhbuble-02.png" alt="set1" dragabble="true" />   
+                <input type="image" class="cloud" src="/assets/clouds/thinkhbuble-03.png" alt="set1" dragabble="true" />   
             </div>
     </div>
   </template>
   <script>
       Polymer('scene-assets-widgets', {
+        
+            dragAction: function(ev) {
+                //console.log(ev);
+                var type = "asset";
+                if($(ev.originalEvent.target).hasClass("bg")) {
+                    type = "bg";
+                } if($(ev.originalEvent.target).hasClass("cloud")) { 
+                    type = "cloud";
+                }
+                ev.originalEvent.dataTransfer.setData("text", '{"src": "'+ev.originalEvent.target.src+'","type":"'+type+'"}');
+                console.log("drag");
+            },
             domReady: function () {
                 console.log($(this.$.tabs));
                $(this.$.tabs).tabs(); 
+              $(this.$.tabs).find("input").on("dragstart", this.dragAction);
             }
         });
   </script>
