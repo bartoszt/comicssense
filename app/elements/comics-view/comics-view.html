@@ -7,20 +7,26 @@
     <template>         
         <pvc-globals values="{{globals}}"></pvc-globals>
         <style>
-        .comicsTemplate {
-            margin:0 auto; 
-            height:500px; 
+        .comicsTemplate { 
+            height:100%; 
+            width: 100%;
+            float: left;
+            margin-right: 15px;
+            margin-bottom: 15px;
         }
         .comicsTemplateItem {
-            width:390px;
-            height:100%; 
-            float:left;
+            width: 390px;
+            height:500px; 
+            float: left;
+            margin-right: 3px;
+            margin-bottom: 15px;
             border:3px solid #ccc; 
             border-radius:6px;
-            margin-right:10px;
+            position: relative;
         }
+        
         .comicsTemplateItem.available {            
-            border:3px dashed #3bb4be; 
+            border:3px dashed #1fb1bf; 
             cursor:pointer;
         }
         .comicsTemplateItem.available:hover {
@@ -28,21 +34,63 @@
         }
         .comicsTemplateItem.done {
             background:white;
-            border:3px solid black;
+            border: 3px solid black;
         }
         .comicsTemplateItem.progress {
-            background:white;
-            border:3px dashed red;
+            background: white;
+            border: 3px dashed red;
+        }
+        #progressText {
+            color: red;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 17px;
+        }
+       
+        #progressText span {
+            font-size: 30px;
+            float: left;
+            display: inline-block;
+            line-height: 19px;
+            margin-right: 6px;
+        }
+        #nextText {
+            color: #1fb1bf;
+            position: absolute;
+            top: 200px;
+            left: 115px;
+            font-size: 17px;
+            text-align: center;
+        }
+        #nextText span{
+            color: #1fb1bf;
+            font-size: 14px;
+        }
+        #nextText h4{
+            margin: 6px 0;
         }
         #comicsInProgress {
             display:none;
+            padding: 45px 0;
         }
+           
         .inProgress #comicsInProgress {
             display:block;
         }
         .inProgress #comicsNew {
             display:none;
         }
+        #comicsView {
+            width: 100%;
+            overflow: hidden;
+        }
+        #comicsView h3 {
+            color: #1fb1bf;
+            font-size: 24px;
+            font-weight: normal;
+        }
+            
         </style>
         
         <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
@@ -50,16 +98,14 @@
         
         <section id="comicsView">
             <div id="comicsNew">
-                <h1>Create new comics</h1>
+                <h3>Create new comics</h3>
                 <label for="comicsTitle">Comics Title</label>
                 <input id="comicsTitle" type="text" value="{{title}}" />
                 <button on-click="{{createNewComicsAction}}">Create new</button>
             </div>
-
-
             <div id="comicsInProgress">
-                <div>Current comics in progress {{data.title}}</div>
-
+                <h3>{{data.title}}</h3>
+                <div id='progressText'><span>&#8226;</span> Current comics in progress</div>
                 <div class="comicsTemplate">
                     <div class="comicsTemplateItem {{status[0]}}" on-click="{{editScene}}" data-scenenr="0">
                          <html-echo html="{{data.scenes[0].image}}"></html-echo>
@@ -73,25 +119,22 @@
                 </div>
             </div>
         </section>
-        
         <content></content>
-                
-        
     </template>
-    
     <script>
     (function () {
       Polymer({ 
           status : {},
-                     
           oneItemIsAvailable : false,
           oneItemIsInProgress : false,
           comicsMovedtoCollection : false,
-          
-          
+                   
           // lifecycle methods
           domReady : function () { 
             this.loadCurrentComics();  
+              $(this.$.progressText).remove();
+              $(this.$.nextText).remove();
+            //$(this).find('#progressText')
           },
         
           observe : {
@@ -107,13 +150,10 @@
                 this.moveToDone();
             }
           },
-          
                     
-          loadCurrentComics : function () {              
-              
+          loadCurrentComics : function () {   
               this.oneItemIsAvailable = false;
-              this.oneItemIsInProgress = false; 
-              
+              this.oneItemIsInProgress = false;
               if(this.data && !this.comicsMovedtoCollection) {
                   var _self = this;
                   $(_self.$.comicsView).addClass('inProgress');
@@ -123,18 +163,25 @@
                           _self.status[i] = "done";
                       }
                       else if (_self.data.scenes[i].f_inprogress) {
+                          
                           _self.status[i] = "progress";
                           _self.oneItemIsInProgress = true;
                           if(_self.data.scenes[i].author_id == _self.globals.currentUser.auth.uid) {
                               _self.globals.sceneEditorActivate = true;
                               _self.globals.sceneEditorNumber = i; 
                           }
+                          $(_self.$.comicsInProgress).find('#progressText').remove();
+                          $(_self.$.comicsInProgress).find('.comicsTemplate div').eq(i).append("<div id='progressText'><span>&#8226;</span>Live Preview</div>");
+                          
+                          
                       }
                       else if(!_self.data.scenes[i].f_done && !_self.data.scenes[i].f_inprogress 
                                 && !_self.oneItemIsAvailable && !_self.oneItemIsInProgress) {
                            _self.status[i] = 'available';
-                          console.log("scene " + i + "is available to edit");
+                           console.log("scene " + i + "is available to edit");
                            _self.oneItemIsAvailable = true;
+                          $(_self.$.comicsInProgress).find('#nextText').remove();
+                          $(_self.$.comicsInProgress).find('.comicsTemplate div').eq(i).append("<div id='nextText'><h4>add next</h4><span>continue the story</span></div>");
                       } else {
                           _self.status[i] = '';
                       }
@@ -189,8 +236,11 @@
                   this.globals.sceneEditorActivate = true;
                   this.globals.sceneEditorNumber = sceneNr;
                   this.$.base.commit(); 
+                   document.querySelector('app-router').go('/scene/edit/'+sceneNr);
               }
-               document.querySelector('app-router').go('/scene/edit/'+sceneNr);
+              
+             
+               
           },
           
           moveToDone : function () {
