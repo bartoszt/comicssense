@@ -1,14 +1,77 @@
- <polymer-element name="top-menu">
-    <template>
+<link rel="import" href="../../bower_components/polymer/polymer.html"> 
+ 
+<polymer-element name="top-menu">
+    <template>        
+        <style>
+            header {
+              display: block;
+              width: 1200px;
+              margin: 0 auto;
+              position:relative;
+            }
+            a {
+                text-decoration:none;
+                color:#3bb4be;
+            }
+            a:hover {
+                color:#1f6b72;
+            }
+            
+            a h1 {
+                color:#1f6b72;
+                font-size:64px;
+                line-height:48px;
+                margin-bottom:0;
+                margin-top:52px;                
+            }
+            
+            a h2 {
+                font-size:32px;
+            }
+            a i:before {
+                font-family:'icomoon';
+                font-style:normal;
+                display:inline-block;
+                margin-right:10px;
+                font-size:26px;
+                color:#3bb4be;
+                vertical-align: middle;
+            }
+            .btn-gallery i:before {
+                content: "\e601";
+            }
+            .btn-live i:before {                
+                content: "\e600";
+            }
+            
+            .logo {
+                float:left;
+            }
+            
+            
+            nav {
+                position:absolute;
+                right:2px;
+                top:130px;
+                list-style:none;
+            }
+            
+            li {
+                display:inline-block;
+                padding:0 7px; 
+            }
+            
+        </style>
         <pvc-globals values="{{globals}}"></pvc-globals>
         
-        <header>
-            <figure>
-                <a href="/#/gallery"><img src="image/logo.png" alt="Logo" /></a>
-            </figure>
+        <header>             
+            <a href="/" class="logo">
+                <h1>Comics Sense</h1>
+                <h2>Team Comics Creator</h2>
+            </a> 
             <nav>
-                <li><a href="/#/gallery">Gallery</a></li>
-                <li><a href="/#/scene">Comics</a></li>
+                <li><a class="btn-gallery" href="/#/gallery"><i></i>Gallery</a></li>
+                <li><a class="btn-live" href="/#/scene"><i></i>Live Preview</a></li>
                 <li><logout-form></logout-form></li>
             </nav>  
         </header> 

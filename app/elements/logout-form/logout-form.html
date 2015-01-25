@@ -1,14 +1,19 @@
- <polymer-element name="logout-form">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-login.html">
+
+<polymer-element name="logout-form">
     <template>
         
-    <firebase-login id="baseLogin" user="{{user}}"  location="https://comicsense.firebaseio.com/" provider="{{provider}}"></firebase-login>  
-    <firebase-element id="userBase" data="{{data}}" location="https://comicsense.firebaseio.com/usersonline"></firebase-element>
-        
-    <pvc-globals values="{{globals}}"></pvc-globals>
-        
-    <button on-click="{{logout}}" hidden?="{{!globals.currentUser}}">Logout</button>
+        <firebase-login id="baseLogin" user="{{user}}"  location="https://comicsense.firebaseio.com/" provider="{{provider}}"></firebase-login>  
+        <firebase-element id="userBase" data="{{data}}" location="https://comicsense.firebaseio.com/usersonline"></firebase-element>
+
+        <pvc-globals values="{{globals}}"></pvc-globals>
+
+        <button on-click="{{logout}}" hidden?="{{!globals.currentUser}}">Logout</button>
     
-     </template>
+    </template>
+    
     <script>
     (function () {
       Polymer({
