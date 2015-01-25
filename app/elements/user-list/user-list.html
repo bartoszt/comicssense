@@ -1,0 +1,23 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
+
+<polymer-element name="user-list">
+    <template>
+        <pvc-globals values="{{globals}}"></pvc-globals>
+        <firebase-element id="userBase" data="{{data}}" keys="{{keys}}" location="https://comicsense.firebaseio.com/usersonline"></firebase-element>
+         
+        <h2>Users list</h2> 
+        <ul>
+            <template repeat="{{key in keys}}">   
+                <li>{{data[key].username}}</li>
+            </template>
+         </ul>      
+    </template>
+
+    <script>
+    (function () {
+      Polymer({ 
+      })
+    })();
+    </script>
+</polymer-element>

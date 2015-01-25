@@ -2,11 +2,125 @@
 
 <polymer-element name="home-page">
     <template>
-        <h1>Welcome to ComicsSense</h1>
+        <style>
+            a {
+              text-decoration:none;
+              color:#3bb4be;
+            }
+            a.more {
+                font-size:24px;
+                float:right;
+            }
+            
+            h1,h2,h3 {
+                color:#3bb4be;
+                font-weight: normal;
+            }
+            h3 {
+                font-size:24px;
+            }
+            .content-wrapper {
+                width:1200px;
+                height:100%;
+                margin:0 auto;
+            }
+            .seriesContainer {                
+                width:100%;
+                height:760px;
+                padding:45px 0;
+                box-sizing: border-box;
+           }
+            .seriesContainer img {
+                margin:0 10px;
+            }
+            
+            .comicsInfo {
+                width:100%;
+                height:700px;
+                background:#3bb4be url(/images/comics-info-bg.png) no-repeat center;
+                background-size:cover;
+            }
+            
+            .comicsInfo h2, .comicsInfo h1, .comicsInfo p {
+                color:#fff;
+            }
+            .comicsInfo .content-wrapper {
+                padding-top:75px;
+            }
+            .comicsInfo h2 {
+                font-size:36px; 
+                margin-bottom:27px;
+            }
+            .comicsInfo h1 {
+                font-size:48px;
+                margin-top:0;                
+            }
+            .comicsInfo p {
+                font-size:18px;
+                line-height:26px;
+                opacity:0.7;
+                max-width:55%;
+            }
+            
+            .gallery {                
+                width:100%;
+                height:760px;
+                padding:45px 0;
+                box-sizing: border-box;
+            } 
+            .gallery .content-wrapper {
+                position:relative;
+            }
+            .gallery img {
+                margin:0 auto;
+                padding:35px 0;
+                display:block;
+            }
+            
+            .filters {
+                position:absolute;
+                right:2px;
+                top:0;
+            }
+            .filters li {
+                display:inline-block;
+                padding:0 5px;
+            }
+            
+        </style>
+         
+        <!-- todo - as a popup -->
         <login-form></login-form>
         
-     
-        <counter-view></counter-view>
+        <section class="seriesContainer">
+            <div class="content-wrapper">
+                <h3>Man and a dog series</h3>
+                <!-- carousel of few comicses -->
+                <img src="/images/mandog-tmp.png" alt="Man and a Dog talking" />
+            </div>
+        </section>
+        
+        <section class="comicsInfo">
+            <div class="content-wrapper">
+                <h2>Creating and sharing</h2>
+                <h1>1. First choose the strip</h1>
+                <p>Once you start editing, others in your web circle can see it, comment and share their opinion</p>
+            </div>
+        </section>
+        
+        <section class="gallery">
+            <div class="content-wrapper">
+                <h3>Gallery</h3>
+                <ul class="filters">
+                    <li>filter by:</li>
+                    <li><a href="#">recently submited</a></li>
+                    <li><a href="#">popular</a></li>
+                </ul>
+                <!-- carousel of few comicses by filters -->
+                <img src="/images/gallery-tmp.png" alt="Man and a Dog talking" />
+                <a class="more">See more</a>
+            </div>
+        </section>        
     </template>
     
     <script>
