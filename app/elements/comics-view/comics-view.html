@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
 
 
@@ -53,7 +55,8 @@
                 <h1>Create new comics</h1>
                 <label for="comicsTitle">Comics Title</label>
                 <input id="comicsTitle" type="text" value="{{title}}" />
-                <button on-click="{{createNewComicsAction}}">Create new</button>
+                <paper-button on-click="{{createNewComicsAction}}" raised ><core-icon icon="add-circle" role="img"></core-icon>&nbsp;&nbsp;Create new</paper-button>
+                <button on-click="{{createNewComicsAction}}" >Create new</button>
             </div>
 
 
