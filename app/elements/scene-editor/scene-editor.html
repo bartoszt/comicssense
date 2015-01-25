@@ -35,13 +35,13 @@
 
       <div id="btns" class="buttons">
         <!-- TO BE DONE - widget for asseiejts -->
-      <input type="image" class="asset" src="/assets/as1.png" alt="hopek" dragabble="true" />
-      <input type="image" class="asset" src="/assets/as2.png" dragabble="true" />
-      <input type="image" class="asset" src="/assets/as3.png" alt="gwiazdka" dragabble="true" />
-      <input type="image" class="bg" src="/assets/b1.png" dragabble="true" />
-      <input type="image" class="bg" src="/assets/b2.jpg" dragabble="true" />
-      <input type="image" class="cloud" src="/assets/c1.jpeg" dragabble="true" />
-      <input type="image" class="cloud" src="/assets/cloud2.svg" dragabble="true" />
+      <input type="image" class="asset" src="/assets/items/as1.png" alt="hopek" dragabble="true" />
+      <input type="image" class="asset" src="/assets/items/as2.png" dragabble="true" />
+      <input type="image" class="asset" src="/assets/items/as3.png" alt="gwiazdka" dragabble="true" />
+      <input type="image" class="bg" src="/assets/bgs/b1.png" dragabble="true" />
+      <input type="image" class="bg" src="/assets/bgs/b2.jpg" dragabble="true" />
+      <input type="image" class="cloud" src="/assets/clouds/c1.jpeg" dragabble="true" />
+      <input type="image" class="cloud" src="/assets/clouds/cloud2.svg" dragabble="true" />
 
       <button type="reset" id="reset" >Clear</button>
       <button type="submit" id="save" >Save</button>
@@ -58,6 +58,7 @@
     cheight: 500,
     _self: null,
     data: null,
+
 
     allowDropAction: function(ev) {
       ev.originalEvent.preventDefault();
@@ -193,7 +194,7 @@
 
     clearBoardAction: function(ev) {
         _self.$.c1.fabric.clear();
-        _self.$.c1.fabric.setBackgroundColor('', _self.$.c1.fabric.renderAll.bind(canvas));
+        _self.$.c1.fabric.setBackgroundColor("#9FF");
         _self.prepareBoardAction();
     },
     saveAction: function(ev) {
@@ -211,16 +212,24 @@
         _self.globals.sceneEditorActivate = false;
 
     },
+    initialize: function () {
+      if( this.$.c1.fabric != null) {
+        this.$.c1.clouds = {};
+        this.clearBoardAction();
+      } else {
+          this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
+          this.$.c1.fabric = this.canvas;
+          this.$.c1.clouds = {}   
+          _self = this;     
+      }
+    },
 
      
-    ready : function() { 
+    ready : function() {
+      this.initialize();
+      _self = this;
+
       if(this.globals.sceneEditorActivate) { 
-          this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
-          //to have a more głobał accesss
-          this.$.c1.fabric = this.canvas;
-          
-          this.$.c1.clouds = {};
-           
           //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
           this.prepareBoardAction();
           $(this.$.dragArea).on("drop", this.dropAction);
@@ -228,7 +237,7 @@
           $(this.$.btns).find("input").on("dragstart", this.dragAction);
           $(this.$.btns).find("button#reset").click(this.clearBoardAction);
           $(this.$.btns).find("button#save").click(this.saveAction);
-          _self = this;
+          
           this.clearBoardAction();
 
       }
