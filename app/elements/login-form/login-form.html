@@ -9,7 +9,7 @@
         <firebase-login id="baseLogin" user="{{user}}" statusKnown="{{statusKnown}}" location="https://comicsense.firebaseio.com/" provider="{{provider}}" on-login="{{onLogin}}" on-error="{{onLoginError}}" on-user-created="{{userCreated}}"></firebase-login>
        
    
-        <firebase-element id="userBase" location="https://comicsense.firebaseio.com/usersonline"></firebase-element>
+        <firebase-element id="userBase" location="https://comicsense.firebaseio.com/usersonline" log="true"></firebase-element>
         
         <pvc-globals values="{{globals}}"></pvc-globals>
         
@@ -129,7 +129,7 @@
         },
           
         newOnlineUser : function () { 
-            if(!this.onlineUserAdded) {
+            if(!this.onlineUserAdded && !this.globals.currentUser.nickname && !this.globals.currentUser.auth.uid) {
               this.$.userBase.push({username : this.globals.currentUser.nickname, uid : this.globals.currentUser.auth.uid});
               this.onlineUserAdded = true;
             }

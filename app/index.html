@@ -16,12 +16,8 @@
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents.min.js -->
-  <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/fabric/dist/fabric.min.js"></script>
-  <script src="bower_components/alertify.js/lib/alertify.js"></script>
 
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-  <script src="bower_components/firebase/firebase.js"></script>
   <!-- endbuild -->    
     
   <!-- build:vulcanized elements/elements.vulcanized.html -->
@@ -40,9 +36,8 @@
           <!-- matches an exact path -->
           <app-route path="/" import="/pages/home-page/home-page.html"></app-route>
           <app-route path="/scene" import="/pages/scene-page/scene-page.html"></app-route>
+          <app-route path="/comics/:id" import="/pages/comic-page/comic-page.html"></app-route>
           <app-route path="/gallery" import="/pages/gallery-page/gallery-page.html"></app-route>
-           
-                <app-route path="/comic/:id" import="/pages/comic-page/comic-page.html"></app-route>
        
           <!-- matches everything else -->
           <app-route path="*" import="/pages/not-found-page/not-found-page.html"></app-route>
@@ -51,6 +46,10 @@
     
   
   <!-- build:js scripts/app.js -->
+    
+  <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/fabric/dist/fabric.min.js"></script>
+  <script src="bower_components/alertify.js/lib/alertify.js"></script>
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
 </body>

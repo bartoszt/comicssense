@@ -5,16 +5,15 @@
 
 <polymer-element name="gallery-view" attributes="">
     <template>
-        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/" ></firebase-element>
+        <firebase-element id="base" data="{{data}}" keys="{{keys}}" location="https://comicsense.firebaseio.com/comicses" ></firebase-element>
         <article>
-            <template repeat="{{comic, comicIndex in data.comics}}">
+            <template repeat="{{key, keyIndex in keys}}">
                 <section>
-                    <h1>{{comic.title}}</h1>
-                    <h2>{{comic.author}}</h2>
+                    <h1>{{data[key].comics.title}}</h1>
                     <div>
-                        <html-echo html="{{comic.scenes[0].image}}"></html-echo>
+                        <html-echo html="{{data[key].comics.scenes[0].image}}"></html-echo>
                     </div>
-                    <a href="#/comic/{{comicIndex}}">Look</a>
+                    <a href="#/comics/{{key}}">Look</a>
                 </section>
             </template>
         </article>
