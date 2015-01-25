@@ -1,21 +1,38 @@
  <polymer-element name="logout-form">
     <template>
         
-    <firebase-login id="baseLogin" user="{{user}}" location="https://comicsense.firebaseio.com/users" provider="{{provider}}"></firebase-login> 
-   
+    <firebase-login id="baseLogin" user="{{user}}"  location="https://comicsense.firebaseio.com/" provider="{{provider}}"></firebase-login>  
+    <firebase-element id="userBase" data="{{data}}" location="https://comicsense.firebaseio.com/usersonline"></firebase-element>
+        
     <pvc-globals values="{{globals}}"></pvc-globals>
         
     <button on-click="{{logout}}" hidden?="{{!globals.currentUser}}">Logout</button>
     
      </template>
     <script>
+    (function () {
       Polymer({
         logout : function () {  
             this.provider = this.globals.currentUser.provider;
+            this.removeOnlineUser();
             this.globals.currentUser = null;
+            
             this.$.baseLogin.logout();
             document.querySelector('app-router').go('/');
+        },
+          
+        removeOnlineUser : function () {
+            console.log(this.globals);
+            var _self = this; 
+            if(_self.data) { 
+                    $.each(_self.data, function(i, item){
+                        if(item.uid == _self.globals.currentUser.auth.uid){  
+                            delete _self.data[i];
+                        }
+                    }); 
+            }
         }
-      })();
+      })
+    })();
     </script>
   </polymer-element>
