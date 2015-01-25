@@ -1,5 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
 
 <polymer-element name="scene-editor" attributes="sceneNr activate">
   <template>
@@ -22,7 +24,7 @@
       bordeR: solid 1px #888;
     }
     .buttons {
-      clear: both;
+      
       margin-top: 3em;
     }
     input[type="image"] {
@@ -32,16 +34,16 @@
     </style>
     <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
     <section id="sceneEditor">
-      <h1>{{scenaNr}}</h1>
+      <h1>Edit scene {{scenaNr}}</h1>
       <counter-view starttimer="true"></counter-view>
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>
-        
-      <div id="btns" class="buttons">
+      <div id="assety" class="assets">
         <!-- TO BE DONE - widget for asseiejts -->
         <input type="image" class="asset" src="/assets/items/pan01.svg" alt="pan01" dragabble="true" />
-        <input type="image" class="asset" src="/assets/items/pan02.svg" alt="pan01" dragabble="true" />
+        <input type="image" class="asset" src="/assets/items/pan02.svg" alt="pan02" dragabble="true" />
+        <input type="image" class="asset" src="/assets/items/pan03.png" alt="pan03" dragabble="true" />        
         <input type="image" class="asset" src="/assets/items/as1.png" alt="hopek" dragabble="true" />
         <input type="image" class="asset" src="/assets/items/as2.png" dragabble="true" />
         <input type="image" class="asset" src="/assets/items/as3.png" alt="gwiazdka" dragabble="true" />
@@ -50,9 +52,13 @@
         <input type="image" class="cloud" src="/assets/clouds/c1.jpeg" dragabble="true" />
         <input type="image" class="cloud" src="/assets/clouds/cloud2.svg" dragabble="true" />
 
-        <button type="reset" id="reset" >Clear</button>
-        <button type="submit" id="save" >Save</button>
+      </div>      
+      <div id="actions" class="buttons">
+        <paper-button on-click="{{cutAsset}}" raised ><core-icon icon="content-cut" role="img"></core-icon>&nbsp;&nbsp;Cut</paper-button>
+        <paper-button on-click="{{clearBoardAction}}" raised ><core-icon icon="delete" role="img"></core-icon>&nbsp;&nbsp;Clear</paper-button>
+        <paper-button on-click="{{saveAction}}" raised ><core-icon icon="save" role="img"></core-icon>&nbsp;&nbsp;Save</paper-button>
       </div>
+
     </section>
     <pvc-globals values="{{globals}}"></pvc-globals>
 
@@ -72,7 +78,6 @@
     },
        
     domReady : function() {
-        this.ready();
         this.start = true;
     },
 
@@ -86,6 +91,9 @@
         }
         ev.originalEvent.dataTransfer.setData("text", '{"src": "'+ev.originalEvent.target.src+'","type":"'+type+'"}');
         console.log("drag");
+    },
+    cutAsset: function() {
+      consoile.log("wycinam drania");
     },
       
     autoSaveSceneAction: function() {
@@ -243,18 +251,13 @@
     ready : function() {
       this.initialize();
       _self = this;
-
       if(this.globals.sceneEditorActivate) { 
           //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
           this.prepareBoardAction();
           $(this.$.dragArea).on("drop", this.dropAction);
           $(this.$.dragArea).on("dragover", this.allowDropAction);
-          $(this.$.btns).find("input").on("dragstart", this.dragAction);
-          $(this.$.btns).find("button#reset").click(this.clearBoardAction);
-          $(this.$.btns).find("button#save").click(this.saveAction);
-          
+          $(this.$.assety).find("input").on("dragstart", this.dragAction);
           this.clearBoardAction();
-
 
       }
     }
