@@ -7,13 +7,15 @@
     <template>
         <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/" ></firebase-element>
         <article>
-            <template repeat="{{comic in data.comics}}">
+            <template repeat="{{comic, comicIndex in data.comics}}">
                 <section>
                     <h1>{{comic.title}}</h1>
                     <h2>{{comic.author}}</h2>
                     <div>
-                        <html-echo html="{{comic.scenes[0].image}}"></html-echo></p>
+                        <html-echo html="{{comic.scenes[0].image}}"></html-echo>
                     </div>
+                    <div>{{comicIndex}}</div>
+                    <a href="#/comic/{{comicIndex}}">Look</a>
                 </section>
             </template>
         </article>
@@ -22,65 +24,8 @@
     <script>
     (function () {
        Polymer({ 
-           data: {
-               "comics": 
-                    [ 
-                        {
-                            "author": "Monika",
-                            "title": "My comic",
-                            "scenes": 
-                               [ 
-                                    {   
-                                        "image": "<svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px'" +
-                                                    "viewBox='0 0 100 100' enable-background='new 0 0 100 100' xml:space='preserve'>" +
-                                                    "<rect x='7' y='17.1' fill='#29093A' stroke='#000000' stroke-miterlimit='10' width='46.2' height='17.6'/>" +
-                                                    "<rect x='25.7' y='32.5' fill='#FFFFFF' stroke='#000000' stroke-miterlimit='10' width='36.5' height='41.5'/>" +
-                                                    "<rect x='47.8' y='62.5' fill='#46B2A8' stroke='#000000' stroke-miterlimit='10' width='20.5' height='22.9'/>" +
-                                                    "</svg>",
-                                        "author": "Mateusz",
-                                        "title": "Intro scene",
-                                        "data": "2015-01-12"
-                                    }, 
-                                    {   
-                                        "image": "<svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px'" +
-                                                    "viewBox='0 0 100 100' enable-background='new 0 0 100 100' xml:space='preserve'>" +
-                                                    "<rect x='7' y='17.1' fill='#29093A' stroke='#000000' stroke-miterlimit='10' width='46.2' height='17.6'/>" +
-                                                    "<rect x='25.7' y='32.5' fill='#FFFFFF' stroke='#000000' stroke-miterlimit='10' width='36.5' height='41.5'/>" +
-                                                    "<rect x='47.8' y='62.5' fill='#46B2A8' stroke='#000000' stroke-miterlimit='10' width='20.5' height='22.9'/>" +
-                                                    "</svg>",
-                                        "author": "Marcin",
-                                        "title": "scene 2",
-                                        "data": "2015-01-12"
-                                    }
-                                ]
-                        },
-                        {
-                            "author": "Monika",
-                            "title": "My comic",
-                            "scenes": [ 
-                                    {   
-                                        "image": "<svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px'" +
-                                                    "viewBox='0 0 100 100' enable-background='new 0 0 100 100' xml:space='preserve'>" +
-                                                    "<rect x='7' y='17.1' fill='#29093A' stroke='#000000' stroke-miterlimit='10' width='46.2' height='17.6'/>" +
-                                                    "<rect x='25.7' y='32.5' fill='#FFFFFF' stroke='#000000' stroke-miterlimit='10' width='36.5' height='41.5'/>" +
-                                                    "<rect x='47.8' y='62.5' fill='#46B2A8' stroke='#000000' stroke-miterlimit='10' width='20.5' height='22.9'/>" +
-                                                    "</svg>",
-                                        "author": "Mateusz",
-                                        "title": "Intro scene",
-                                        "data": "2015-01-12"
-                                    }, 
-                                    {   
-                                        "image": "scene2.svg",
-                                        "author": "Marcin",
-                                        "title": "scene 2",
-                                        "data": "2015-01-12"
-                                    }
-                                ]
-                        }
-                    ]
-                },  
-              domReady : function () {
-                  this.$.base.push();
+              ready : function () {
+                  //this.$.base.push();
               },
        });
     })();
