@@ -2,8 +2,34 @@
 
 <polymer-element name="home-page">
     <template>
-        <h1>Welcome to ComicsSense</h1>
-        <login-form></login-form> 
+        <style>
+            
+        </style>
+         
+        <!-- todo - as a popup -->
+        <login-form></login-form>
+        
+        <section class="seriesContainer">
+            <h3>Man and a dog series</h3>
+            <!-- carousel of few comicses -->
+        </section>
+        
+        <section class="comicsInfo">
+            <h2>Creating and sharing</h2>
+            <h1>1. First choose the strip</h1>
+            <p>Once you start editing, others in your web circle can see it, comment and share their opinion</p>
+        </section>
+        
+        <section class="gallery">
+            <h3>Gallery</h3>
+            <ul class="filters">
+                <li>filter by:</li>
+                <li><a href="#">recently submited</a></li>
+                <li><a href="#">popular</a></li>
+            </ul>
+            <!-- carousel of few comicses by filters -->
+            <a class="more">See more</a>
+        </section>        
     </template>
     
     <script>
