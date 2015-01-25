@@ -21,33 +21,38 @@
     }
     
     </style>
-    <section id="sceneEditor" hidden?={{!activate}}>
-      <div class="holder" id="dragArea" >
-        <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
-      </div>
-      <div id="btns" class="buttons">
-        <!-- TO BE DONE - widget for asseiejts -->
-      <input type="image" class="asset" src="/assets/as1.png" alt="hopek" dragabble="true" />
-      <input type="image" class="asset" src="/assets/as2.png" dragabble="true" />
-      <input type="image" class="asset" src="/assets/as3.png" alt="gwiazdka" dragabble="true" />
-      <input type="image" class="bg" src="/assets/b1.png" dragabble="true" />
-      <input type="image" class="bg" src="/assets/b2.jpg" dragabble="true" />
-      <input type="image" class="cloud" src="/assets/c1.jpeg" dragabble="true" />
-      <input type="image" class="cloud" src="/assets/cloud2.svg" dragabble="true" />
 
-      <button type="reset" id="reset" >Clear</button>
-      <button type="submit" id="save" >Save</button>
-      </div>
-    </section>
-    <pvc-globals values="{{globals}}"></pvc-globals>
-    <firebase-element id="fbase" location="https://comicsense.firebaseio.com/currentComics" data="{{data}}" keys="{{keys}}" log="true" ></firebase-element>
-   
+      <template repeat="{{i in bgs}}">
+
+        <input type="image" class="asset" src="i" alt="hopek" dragabble="true" />
+      </template>      
+      <template repeat="{{i in items}}">
+        <input type="image" class="asset" src="i" alt="hopek" dragabble="true" />
+      </template>
+      <template repeat="{{i in clouds}}">
+        <input type="image" class="asset" src="i" alt="hopek" dragabble="true" />
+      </template>
+
+      <div id="btns" class="buttons">
+            <!-- TO BE DONE - widget for asseiejts -->
+          <input type="image" class="asset" src="/assets/as1.png" alt="hopek" dragabble="true" />
+          <input type="image" class="asset" src="/assets/as2.png" dragabble="true" />
+          <input type="image" class="asset" src="/assets/as3.png" alt="gwiazdka" dragabble="true" />
+          <input type="image" class="bg" src="/assets/b1.png" dragabble="true" />
+          <input type="image" class="bg" src="/assets/b2.jpg" dragabble="true" />
+          <input type="image" class="cloud" src="/assets/c1.jpeg" dragabble="true" />
+          <input type="image" class="cloud" src="/assets/cloud2.svg" dragabble="true" />
+
+          <button type="reset" id="reset" >Clear</button>
+          <button type="submit" id="save" >Save</button>
+          </div>
+
   </template>
   <script>
   Polymer({
-    canvas: null,
-    cwidth: 800,
-    cheight: 450,
+    bgs: null,
+    items: null,
+    clouds: null,
     _self: null,
     data: null,
 
@@ -55,16 +60,14 @@
 
     ready: function() {
       if(this.activate) {
-          this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
-          //to have a more głobał accesss
-          this.$.c1.fabric = this.canvas;
-          this.$.c1.clouds = {};
+          _self = this;
+          $().getJSON("/assets/items.json", function(json) {
+            var items = eval(json);
+            consol.log(items);
+            //trzeba przefiltrować, żęby app/dit wywalic
+            _self.items = items;
+          });
 
-          //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
-          this.prepareBoardAction();
-
-          $(this.$.dragArea).on("drop", this.dropAction);
-          $(this.$.dragArea).on("dragover", this.allowDropAction);
           $(this.$.btns).find("input").on("dragstart", this.dragAction);
           $(this.$.btns).find("button#reset").click(this.clearBoardAction);
           $(this.$.btns).find("button#save").click(this.saveAction);
