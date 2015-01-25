@@ -38,10 +38,17 @@
       width: 100px;
       height: 100px;
     }
+    
+    h1 {
+        font-size: 36px;
+        margin-left:42px;
+        color: #3bb4be;
+    }    
     </style>
     <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
     <section id="sceneEditor">
       <h1>Edit scene</h1>
+      <counter-view sceneNr={{sceneNr}} starttimer="true"></counter-view>
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>
@@ -164,7 +171,7 @@
                 source: url,
                 repeat: 'no-repeat'
               },
-              _self.$.c1.fabric.renderAll()
+              _self.$.c1.fabric.renderAll.bind(_self.$.c1.fabric)
             );
           _self.autoSaveSceneAction();
         });
