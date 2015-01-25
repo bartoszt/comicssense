@@ -2,14 +2,32 @@
 
 <polymer-element name="scene-page">
     <template>
+        <style>
+            .scenePage {
+                width:1280px;
+                margin:0 auto;
+                position:relative;
+            }
+            comics-view, scene-editor {
+                position:absolute;
+                top:0;
+                height:700px;
+            }
+            scene-editor {
+                z-index:1;   
+            }
+            .clearfix {clear:both;}
+        </style>
         <pvc-globals values="{{globals}}"></pvc-globals>
         <session-required></session-required>
         
-        <h1>Scene Page</h1> 
-        <comics-view></comics-view>
-        <scene-editor activate="{{globals.sceneEditorActivate}}" sceneNr="{{globals.sceneEditorNumber}}"></scene-editor>
-        
-        <user-list></user-list>
+        <section class="scenePage"> 
+            <comics-view></comics-view>
+            <scene-editor hidden?={{!globals.sceneEditorActivate}}></scene-editor>
+            
+
+            <user-list class="clearfix"></user-list>
+        </section>
     </template>
     
     <script>

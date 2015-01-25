@@ -8,30 +8,31 @@
         <pvc-globals values="{{globals}}"></pvc-globals>
         <style>
         .comicsTemplate {
-            width:100%;
-            border:1px solid #ccc;
-            height:500px;
+            margin:0 auto; 
+            height:500px; 
         }
         .comicsTemplateItem {
-            width:30%;
-            height:100%;
-            padding:1%;
+            width:390px;
+            height:100%; 
             float:left;
-            border:1px solid #333;
-            background:gray;
+            border:3px solid #ccc; 
+            border-radius:6px;
+            margin-right:10px;
         }
-        .comicsTemplateItem.available {
-            background:green;
+        .comicsTemplateItem.available {            
+            border:3px dashed #3bb4be; 
             cursor:pointer;
         }
         .comicsTemplateItem.available:hover {
-            opacity:0.8;   
+            opacity:0.8;    
         }
         .comicsTemplateItem.done {
             background:white;
+            border:3px solid black;
         }
         .comicsTemplateItem.progress {
-            background:yellow;
+            background:white;
+            border:3px dashed red;
         }
         #comicsInProgress {
             display:none;
@@ -45,7 +46,7 @@
         </style>
         
         <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
-        <firebase-element id="baseComicses" data="{{dataComicses}}" location="https://comicsense.firebaseio.com/comicses"></firebase-element>
+        <firebase-element id="baseComicses" keys={{keys}} data="{{dataComicses}}" location="https://comicsense.firebaseio.com/comicses"></firebase-element>
         
         <section id="comicsView">
             <div id="comicsNew">
@@ -72,6 +73,8 @@
                 </div>
             </div>
         </section>
+        
+        <content></content>
                 
         
     </template>
@@ -80,7 +83,7 @@
     (function () {
       Polymer({ 
           status : {},
-          
+                     
           oneItemIsAvailable : false,
           oneItemIsInProgress : false,
           comicsMovedtoCollection : false,
@@ -113,16 +116,19 @@
               
               if(this.data && !this.comicsMovedtoCollection) {
                   var _self = this;
-                  $(this.$.comicsView).addClass('inProgress');
-                  
-                  console.log("loading current project"); 
-                  $(this.$.comicsInProgress).find('.comicsTemplateItem').each(function(i){ 
+                  $(_self.$.comicsView).addClass('inProgress');
+                    
+                  $(_self.$.comicsInProgress).find('.comicsTemplateItem').each(function(i){ 
                       if (_self.data.scenes[i].f_done) {
                           _self.status[i] = "done";
                       }
                       else if (_self.data.scenes[i].f_inprogress) {
                           _self.status[i] = "progress";
                           _self.oneItemIsInProgress = true;
+                          if(_self.data.scenes[i].author_id == _self.globals.currentUser.auth.uid) {
+                              _self.globals.sceneEditorActivate = true;
+                              _self.globals.sceneEditorNumber = i; 
+                          }
                       }
                       else if(!_self.data.scenes[i].f_done && !_self.data.scenes[i].f_inprogress 
                                 && !_self.oneItemIsAvailable && !_self.oneItemIsInProgress) {
@@ -145,21 +151,22 @@
                 title : _self.title,
                 scenes : {
                     '0' : {
-                        author : _self.globals.currentUser.auth.uid,
+                        author_id : '',
+                        author : '',
                         date : '',
                         image : '',
                         f_inprogress : false,
                         f_done : false
                     },
                     '1' : {
-                        author : _self.globals.currentUser.auth.uid,
+                        author : '',
                         date : '',
                         image : '',
                         f_inprogress : false,
                         f_done : false
                     },
                     '2' : {
-                        author : _self.globals.currentUser.auth.uid,
+                        author : '',
                         date : '',
                         image : '',
                         f_inprogress : false,
@@ -175,7 +182,9 @@
               var sceneNr = target.dataset.scenenr;
               //test 
               if($(e.toElement).hasClass('available')) {
-                  this.data.scenes[sceneNr].f_inprogress = true; 
+                  this.data.scenes[sceneNr].f_inprogress = true;  
+                  this.data.scenes[sceneNr].author_id = this.globals.currentUser.auth.uid;
+                  this.data.scenes[sceneNr].author = this.globals.currentUser.nickname;
                   this.globals.sceneEditorActivate = true;
                   this.globals.sceneEditorNumber = sceneNr;
                   this.$.base.commit(); 
@@ -186,7 +195,7 @@
             this.$.baseComicses.push({comics : this.data});
             delete this.data; 
             this.comicsMovedtoCollection = true;            
-            document.querySelector('app-router').go('/comics');
+            document.querySelector('app-router').go('/comics/'+this.keys[this.keys.length-1]);
           }
       
       });

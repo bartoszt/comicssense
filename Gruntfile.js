@@ -269,7 +269,20 @@ module.exports = function (grunt) {
           threshold: 80
         }
       }
-    }
+    },
+    fileindex: {
+        list: {
+            options: {
+                format: 'json_flat',
+                pretty: true
+            },
+            files: [
+                {dest: 'app/assets/items.json', src: ['app/assets/items/*']},
+                {dest: 'app/assets/bgs.json', src: ['app/assets/bgs/*']},
+                {dest: 'app/assets/clouds.json', src: ['app/assets/clouds/*']}
+            ]
+        }
+    }    
   });
 
   grunt.registerTask('server', function (target) {
@@ -287,6 +300,7 @@ module.exports = function (grunt) {
       'copy:styles',
       'autoprefixer:server',
       'connect:livereload',
+      'fileindex:list',
       'open',
       'watch'
     ]);
@@ -305,7 +319,8 @@ module.exports = function (grunt) {
     'autoprefixer',
     'uglify',
     'cssmin',
-    'vulcanize'
+    'vulcanize',
+    'fileindex'
   ]);
 
   grunt.registerTask('default', [

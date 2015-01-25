@@ -28,7 +28,7 @@
       height: 100px;
     }
     </style>
-    <section id="sceneEditor" hidden?={{!activate}}>
+    <section id="sceneEditor">
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>
@@ -48,23 +48,23 @@
       </div>
     </section>
     <pvc-globals values="{{globals}}"></pvc-globals>
-    <firebase-element id="fbase" location="https://comicsense.firebaseio.com/currentComics" data="{{data}}" keys="{{keys}}" log="true" ></firebase-element>
+    <firebase-element id="fbase" on-observe="{{ready}}" location="https://comicsense.firebaseio.com/currentComics" data="{{data}}" keys="{{keys}}" log="true" ></firebase-element>
    
   </template>
   <script>
   Polymer({
     canvas: null,
-    cwidth: 800,
-    cheight: 450,
+    cwidth: 390,
+    cheight: 500,
     _self: null,
     data: null,
 
     allowDropAction: function(ev) {
       ev.originalEvent.preventDefault();
     },
-      
-    observe : {
-        'activate' : 'ready'
+       
+    domReady : function() {
+        this.ready();
     },
 
     dragAction: function(ev) {
@@ -80,13 +80,14 @@
     },
       
     autoSaveSceneAction: function() {
+        _self = this;
         var date = new Date();
-        var id = _self.globals.currentUser.auth.uid;
+        //console.log(_self.currentUser);
         var item =
             {  
-                image: this.canvas.toSVG(),
-                author_id: id,
-                author: "kaka",
+                image: _self.canvas.toSVG(),
+                author_id: _self.globals.currentUser.auth.uid,
+                author: _self.globals.currentUser.nickname,
                 f_inprogress: true,
                 f_done: false,
                 data: date.toDateString() 
@@ -135,7 +136,7 @@
     },
     insertItemAction: function(url, x, y) {
         fabric.Image.fromURL(url, function(oImg) {
-          oImg.set({width: 50, height: 50, top: x, left: y});
+          oImg.set({width: 100, height: 100, top: x, left: y});
           _self.$.c1.fabric.add(oImg)
         });
         _self.autoSaveSceneAction();
@@ -149,8 +150,8 @@
           'selected' : function(){
             if ( !(id in _self.$.c1.clouds) ){
               var text = new fabric.IText("Write your text", {
-                  fontFamily: 'Comic Sans',
-                  fontSize: 20
+                  fontFamily: 'Pintass',
+                fontSize: 20
               });
               _self.$.c1.clouds[id] = {};
               _self.$.c1.clouds[id]['text'] = text 
@@ -192,6 +193,7 @@
 
     clearBoardAction: function(ev) {
         _self.$.c1.fabric.clear();
+        _self.$.c1.fabric.setBackgroundColor('', _self.$.c1.fabric.renderAll.bind(canvas));
         _self.prepareBoardAction();
     },
     saveAction: function(ev) {
@@ -210,24 +212,25 @@
 
     },
 
-
-    ready: function() {
-      if(this.activate) {
+     
+    ready : function() { 
+      if(this.globals.sceneEditorActivate) { 
           this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
           //to have a more głobał accesss
           this.$.c1.fabric = this.canvas;
-          this.$.c1.fabric.clear();
+          
           this.$.c1.clouds = {};
            
           //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
           this.prepareBoardAction();
-
           $(this.$.dragArea).on("drop", this.dropAction);
           $(this.$.dragArea).on("dragover", this.allowDropAction);
           $(this.$.btns).find("input").on("dragstart", this.dragAction);
           $(this.$.btns).find("button#reset").click(this.clearBoardAction);
           $(this.$.btns).find("button#save").click(this.saveAction);
           _self = this;
+          this.clearBoardAction();
+
       }
     }
 
