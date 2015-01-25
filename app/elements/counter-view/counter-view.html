@@ -1,5 +1,7 @@
- <polymer-element name="counter-view" attributes="starttimer">
-    <template>
+ <polymer-element name="counter-view" attributes="starttimer sceneNr">
+    <template>        
+        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
+        
         <style>
             .timer {
                 position: absolute;
@@ -10,7 +12,7 @@
                margin-left: 3px;
             }
         </style>
-        <section class="timer">Time to finish: <span id="worked">00:00</div></section>
+        <section class="timer">Time to finish: <span id="worked">5:00</div></section>
         
     </template>
     <script>
@@ -18,68 +20,38 @@
             sec: 0,
             m: 0,
             s: 0, 
-            timeout: null,
-            ready: function() {
-                _self = this;
-                document.onmousemove = function(){
-                    clearTimeout( _self.timeout);
-                   _self.timeout = setTimeout(function(){ alertify.error("Away too long"); }, 60000);
-                };
-                
-               
-                console.log(_self.starttimer);
-                
+            timeout: null, 
+            
+            domReady: function(){ 
+                var self = this;
+                self.timeout = setInterval(function(){ self.updatesss() }, 1000);        
             },
-            domReady: function(){
-                
-               // var $worked = $("#worked");
-                 _self = this;   
-                function update() {
-                    var myTime = $(_self.$.worked).html();
-                    console.log(myTime);
+            updatesss : function() {                 
+                    var myTime = $(this.$.worked).html();
                     var ss = myTime.split(":");
                     var dt = new Date();
+                    
                     dt.setHours(0);
                     dt.setMinutes(ss[0]);
                     dt.setSeconds(ss[1]);
 
-                    var dt2 = new Date(dt.valueOf() + 1000);
+                    var dt2 = new Date(dt.valueOf() - 1000);
                     var temp = dt2.toTimeString().split(" ");
                     var ts = temp[0].split(":");
 
-                    $(_self.$.worked).html(ts[1]+":"+ts[2]);
-                    if(ts[1] < 10) {
-                        setTimeout(update, 1000);
-                    }else {
+                    $(this.$.worked).html(ts[1]+":"+ts[2]);
+                    if(ts[1] < 10) { 
+                    } else {
+                        clearTimeout( this.timeout);
+                        this.data.scenes[this.sceneNr].f_inprogress = false;
+                        this.data.scenes[this.sceneNr].author = ""; 
+                        this.data.scenes[this.sceneNr].author_id = ""; 
+                        this.data.scenes[this.sceneNr].data = ""; 
+                        this.data.scenes[this.sceneNr].image = ""; 
+                        this.$.base.commit();
                         document.querySelector('app-router').go('/scene');
                     }
-                }
-
-                setTimeout(update, 1000);
-                
-                
-                
-                
-                
-                /* var timer = new Timer();
-                console.log(timer);
-                 timer.start(10);*/
-                /* function pad(val) {
-                    return val > 9 ? val : "0" + val;
-                };
-                    _self.timer = setInterval(function () {
-                        _self.s = pad(++(_self.sec) % 60);
-                        //$(this.$.minutes).text(pad(++(_self.sec) % 60));
-                        //$(this.$.seconds).text(pad(parseInt((_self.sec) / 60, 10)));
-                       _self.m = pad(parseInt((_self.sec) / 60, 10));
-                        console.log(_self.s);
-                    }, 1000);
-
-                    setTimeout(function () {
-                        clearInterval(_self.timer);
-                        alertify.error("Time has passed");
-                    }, 600000); */
-                }
+             }
             
       });
     </script>

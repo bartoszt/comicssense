@@ -40,11 +40,17 @@
       width: 100px;
       height: 100px;
     }
+    
+    h1 {
+        font-size: 36px;
+        margin-left:42px;
+        color: #3bb4be;
+    }    
     </style>
-    <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics2"></firebase-element>
+    <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
     <section id="sceneEditor">
       <h1>Edit scene {{scenaNr}}</h1>
-      <counter-view starttimer="true"></counter-view>
+      <counter-view sceneNr={{sceneNr}} starttimer="true"></counter-view>
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>

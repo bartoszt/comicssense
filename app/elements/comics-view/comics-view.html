@@ -136,9 +136,12 @@
             left: 0;
             text-align: right;
         }
+        .templateText{
+            pointer-events:none;
+        }
         </style>
         
-        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics2"></firebase-element>
+        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
         <firebase-element id="baseComicses" keys={{keys}} data="{{dataComicses}}" location="https://comicsense.firebaseio.com/comicses"></firebase-element>
         
         <section id="comicsView">
@@ -219,7 +222,8 @@
                           _self.oneItemIsInProgress = true;
                           if(_self.data.scenes[i].author_id == _self.globals.currentUser.auth.uid) {
                               _self.globals.sceneEditorActivate = true;
-                              _self.globals.sceneEditorNumber = i; 
+                              _self.globals.sceneEditorNumber = i;                               
+                               document.querySelector('app-router').go('/scene/edit/'+i);
                           }
                          
                           
@@ -273,8 +277,7 @@
             this.data = newComics; 
           },
           
-          editScene : function (e, detail, target) {
-            console.log('Edit scene number: ' + target.dataset.scenenr);
+          editScene : function (e, detail, target) { 
               var sceneNr = target.dataset.scenenr;
 
               //test 
