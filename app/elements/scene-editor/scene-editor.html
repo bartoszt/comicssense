@@ -21,7 +21,15 @@
     }
     .holder canvas {
       margin: 0 auto;
-      bordeR: solid 1px #888;
+      border: solid 3px #666;
+      border-radius: 5px;
+    }
+    .holder:hover canvas { 
+        border-color: #000;
+    }
+    .assets div {
+      border-bottom: solid 1px #eee;
+      padding: 5px 0;
     }
     .buttons {
       
@@ -41,17 +49,20 @@
       </div>
       <div id="assety" class="assets">
         <!-- TO BE DONE - widget for asseiejts -->
-        <input type="image" class="asset" src="/assets/items/pan01.svg" alt="pan01" dragabble="true" />
-        <input type="image" class="asset" src="/assets/items/pan02.svg" alt="pan02" dragabble="true" />
-        <input type="image" class="asset" src="/assets/items/pan03.png" alt="pan03" dragabble="true" />        
-        <input type="image" class="asset" src="/assets/items/as1.png" alt="hopek" dragabble="true" />
-        <input type="image" class="asset" src="/assets/items/as2.png" dragabble="true" />
-        <input type="image" class="asset" src="/assets/items/as3.png" alt="gwiazdka" dragabble="true" />
-        <input type="image" class="bg" src="/assets/bgs/b1.png" dragabble="true" />
-        <input type="image" class="bg" src="/assets/bgs/b2.jpg" dragabble="true" />
-        <input type="image" class="cloud" src="/assets/clouds/c1.jpeg" dragabble="true" />
-        <input type="image" class="cloud" src="/assets/clouds/cloud2.svg" dragabble="true" />
-
+        <div>
+          <input type="image" class="asset" src="/assets/items/pan01.svg" alt="pan01" dragabble="true" />
+          <input type="image" class="asset" src="/assets/items/pan02.svg" alt="pan02" dragabble="true" />
+          <input type="image" class="asset" src="/assets/items/pan03.png" alt="pan03" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/as1.png" alt="hopek" dragabble="true" />
+          <input type="image" class="asset" src="/assets/items/as2.png" dragabble="true" />
+          <input type="image" class="asset" src="/assets/items/as3.png" alt="gwiazdka" dragabble="true" />
+        </div><div>
+          <input type="image" class="bg" src="/assets/bgs/b1.png" dragabble="true" />
+          <input type="image" class="bg" src="/assets/bgs/b2.jpg" dragabble="true" />
+          </div><div>
+          <input type="image" class="cloud" src="/assets/clouds/c1.jpeg" dragabble="true" />
+          <input type="image" class="cloud" src="/assets/clouds/cloud2.svg" dragabble="true" />
+        </div>
       </div>      
       <div id="actions" class="buttons">
         <paper-button on-click="{{cutAsset}}" raised ><core-icon icon="content-cut" role="img"></core-icon>&nbsp;&nbsp;Cut</paper-button>
@@ -68,6 +79,8 @@
   Polymer({
     canvas: null,
     cwidth: 390,
+    cx: 0,
+    cy: 0,
     cheight: 500,
     _self: null,
     data: null,
@@ -93,7 +106,8 @@
         console.log("drag");
     },
     cutAsset: function() {
-      consoile.log("wycinam drania");
+      this.canvas.fxRemove(this.canvas.getActiveObject());
+      this.autoSaveSceneAction();
     },
       
     autoSaveSceneAction: function() {
@@ -110,7 +124,7 @@
                 data: date.toDateString() 
             }
       //get global current id ?
-        _self.data.scenes[sceneNr] = item; 
+        _self.data.scenes[_self.globals.sceneEditorNumber] = item; 
         _self.$.fbase.commit();
     },
     setTextPosition: function(id) {
@@ -211,6 +225,7 @@
 
     clearBoardAction: function(ev) {
         _self.$.c1.fabric.clear();
+        _self.$.c1.fabric.deactivateAllWithDispatch()
         this.$.c1.clouds = {};
         _self.$.c1.fabric.setBackgroundColor("#9FF");
         _self.prepareBoardAction();
@@ -237,11 +252,12 @@
       
       } else {
           this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
+          this.$.c1.fabric = this.canvas;
           this.canvas.on('mouse:up', function(options){
             console.log(options);
             console.log(options.e.clientX);
-          });        
-          this.$.c1.fabric = this.canvas;
+
+          }); 
           this.$.c1.clouds = {}   
           _self = this;     
       }
@@ -258,8 +274,8 @@
           $(this.$.dragArea).on("dragover", this.allowDropAction);
           $(this.$.assety).find("input").on("dragstart", this.dragAction);
           this.clearBoardAction();
-
       }
+       
     }
 
   });
