@@ -45,7 +45,7 @@
         }
         </style>
         
-        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
+        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics1"></firebase-element>
         <firebase-element id="baseComicses" keys={{keys}} data="{{dataComicses}}" location="https://comicsense.firebaseio.com/comicses"></firebase-element>
         
         <section id="comicsView">
@@ -180,6 +180,7 @@
           editScene : function (e, detail, target) {
             console.log('Edit scene number: ' + target.dataset.scenenr);
               var sceneNr = target.dataset.scenenr;
+
               //test 
               if($(e.toElement).hasClass('available')) {
                   this.data.scenes[sceneNr].f_inprogress = true;  
@@ -189,6 +190,7 @@
                   this.globals.sceneEditorNumber = sceneNr;
                   this.$.base.commit(); 
               }
+               document.querySelector('app-router').go('/scene/edit/'+sceneNr);
           },
           
           moveToDone : function () {

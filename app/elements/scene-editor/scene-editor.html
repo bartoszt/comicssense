@@ -14,6 +14,8 @@
     }
     .holder {
       text-align: center;
+      float: left; 
+      margin: 20px;
     }
     .holder canvas {
       margin: 0 auto;
@@ -28,27 +30,29 @@
       height: 100px;
     }
     </style>
+    <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics1"></firebase-element>
     <section id="sceneEditor">
+      <h1>{{scenaNr}}</h1>
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>
 
       <div id="btns" class="buttons">
         <!-- TO BE DONE - widget for asseiejts -->
-      <input type="image" class="asset" src="/assets/items/as1.png" alt="hopek" dragabble="true" />
-      <input type="image" class="asset" src="/assets/items/as2.png" dragabble="true" />
-      <input type="image" class="asset" src="/assets/items/as3.png" alt="gwiazdka" dragabble="true" />
-      <input type="image" class="bg" src="/assets/bgs/b1.png" dragabble="true" />
-      <input type="image" class="bg" src="/assets/bgs/b2.jpg" dragabble="true" />
-      <input type="image" class="cloud" src="/assets/clouds/c1.jpeg" dragabble="true" />
-      <input type="image" class="cloud" src="/assets/clouds/cloud2.svg" dragabble="true" />
+        <input type="image" class="asset" src="/assets/items/as1.png" alt="hopek" dragabble="true" />
+        <input type="image" class="asset" src="/assets/items/as2.png" dragabble="true" />
+        <input type="image" class="asset" src="/assets/items/as3.png" alt="gwiazdka" dragabble="true" />
+        <input type="image" class="bg" src="/assets/bgs/b1.png" dragabble="true" />
+        <input type="image" class="bg" src="/assets/bgs/b2.jpg" dragabble="true" />
+        <input type="image" class="cloud" src="/assets/clouds/c1.jpeg" dragabble="true" />
+        <input type="image" class="cloud" src="/assets/clouds/cloud2.svg" dragabble="true" />
 
-      <button type="reset" id="reset" >Clear</button>
-      <button type="submit" id="save" >Save</button>
+        <button type="reset" id="reset" >Clear</button>
+        <button type="submit" id="save" >Save</button>
       </div>
     </section>
     <pvc-globals values="{{globals}}"></pvc-globals>
-    <firebase-element id="fbase" on-observe="{{ready}}" location="https://comicsense.firebaseio.com/currentComics" data="{{data}}" keys="{{keys}}" log="true" ></firebase-element>
+
    
   </template>
   <script>
@@ -94,7 +98,7 @@
                 data: date.toDateString() 
             }
       //get global current id ?
-        _self.data.scenes[_self.globals.sceneEditorNumber] = item; 
+        _self.data.scenes[sceneNr] = item; 
         _self.$.fbase.commit();
     },
     setTextPosition: function(id) {
@@ -118,6 +122,7 @@
           _self.insertItemAction(data.src, ev.originalEvent.offsetX,ev.originalEvent.offsetY );
         }        
     },
+
     insertBackgroundAction: function(url) {
         fabric.Image.fromURL(url, function(oImg) {
           console.log(" jestem tu");
@@ -194,6 +199,7 @@
 
     clearBoardAction: function(ev) {
         _self.$.c1.fabric.clear();
+        this.$.c1.clouds = {};
         _self.$.c1.fabric.setBackgroundColor("#9FF");
         _self.prepareBoardAction();
     },
@@ -208,8 +214,8 @@
             }
         _self.data.scenes[_self.globals.sceneEditorNumber] = item;
         _self.$.fbase.commit();     
-        
         _self.globals.sceneEditorActivate = false;
+        document.querySelector('app-router').go('/scene');
 
     },
     initialize: function () {

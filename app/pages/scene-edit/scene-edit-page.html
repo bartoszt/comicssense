@@ -1,7 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
-<polymer-element name="scene-page" attributes="sceneNr">
-
+<polymer-element name="scene-edit-page" attributes="sceneNr">
     <template>
         <style>
             .scenePage {
@@ -22,12 +21,10 @@
         <pvc-globals values="{{globals}}"></pvc-globals>
         
 
-        <session-required ></session-required>
-        
-        <section class="scenePage" > 
-            <comics-view></comics-view>
-
-            <user-list class="clearfix"></user-list>
+        <session-required></session-required>
+          <!-- <scene-editor hidden?={{!globals.sceneEditorActivate}} ></scene-editor>-->
+        <section class="scenePage"> 
+            <scene-editor sceneNr="{{sceneNr}}"></scene-editor>
         </section>
     </template>
     
