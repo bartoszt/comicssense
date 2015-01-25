@@ -1,9 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-
 <link rel="import" href="../../bower_components/core-icons/core-icons.html">
-
 <polymer-element name="scene-editor" attributes="sceneNr activate">
   <template>
     <style>
@@ -41,10 +39,9 @@
       height: 100px;
     }
     </style>
-    <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics2"></firebase-element>
+    <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics666"></firebase-element>
     <section id="sceneEditor">
-      <h1>Edit scene {{scenaNr}}</h1>
-      <counter-view starttimer="true"></counter-view>
+      <h1>Edit scene</h1>
       <div class="holder" id="dragArea" >
         <canvas id="c1" width="{{cwidth}}" height="{{cheight}}"  ></canvas>
       </div>
@@ -60,65 +57,6 @@
           <input type="image" class="asset" src="/assets/items/set1-08.png" alt="set1" dragabble="true" />        
           <input type="image" class="asset" src="/assets/items/set1-09.png" alt="set1" dragabble="true" />        
           <input type="image" class="asset" src="/assets/items/set1-10.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-11.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-12.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-13.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-14.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-15.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-16.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-17.png" alt="set1" dragabble="true" />     
-          <input type="image" class="asset" src="/assets/items/set1-18.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-19.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-20.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-21.png" alt="set1" dragabble="true" />     
-          <input type="image" class="asset" src="/assets/items/set1-22.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-23.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-24.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-25.png" alt="set1" dragabble="true" />                         
-          <input type="image" class="asset" src="/assets/items/set1-26.svg" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-27.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-28.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-29.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-30.png" alt="set1" dragabble="true" />    
-          <input type="image" class="asset" src="/assets/items/set1-31.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-32.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-33.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-34.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-35.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-36.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-37.png" alt="set1" dragabble="true" />     
-          <input type="image" class="asset" src="/assets/items/set1-38.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-39.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set1-40.png" alt="set1" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-01.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-02.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-03.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-04.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-05.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-06.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-07.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-08.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-09.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-10.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-11.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-12.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-13.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-14.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-15.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-16.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-17.png" alt="set2" dragabble="true" />     
-          <input type="image" class="asset" src="/assets/items/set2-18.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-19.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-20.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-21.png" alt="set2" dragabble="true" />     
-          <input type="image" class="asset" src="/assets/items/set2-22.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-23.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-24.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-25.png" alt="set2" dragabble="true" />                         
-          <input type="image" class="asset" src="/assets/items/set2-26.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-27.png" alt="set2" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/set2-28.png" alt="set2" dragabble="true" />        
-                       
         </div>
         <div>
           <input type="image" class="bg" src="/assets/bgs/b1.png" dragabble="true" />
@@ -131,6 +69,7 @@
       </div>      
       <div id="actions" class="buttons">
         <paper-button on-click="{{cutAsset}}" raised ><core-icon icon="content-cut" role="img"></core-icon>&nbsp;&nbsp;Cut</paper-button>
+        <paper-button on-click="{{flipAsset}}" raised ><core-icon icon="swap-horiz" role="img"></core-icon>&nbsp;&nbsp;Flip</paper-button>
         <paper-button on-click="{{clearBoardAction}}" raised ><core-icon icon="delete" role="img"></core-icon>&nbsp;&nbsp;Clear</paper-button>
         <paper-button on-click="{{saveAction}}" raised ><core-icon icon="save" role="img"></core-icon>&nbsp;&nbsp;Save</paper-button>
       </div>
@@ -141,14 +80,14 @@
    
   </template>
   <script>
-  Polymer({
+  (function() {Polymer({
     canvas: null,
     cwidth: 390,
     cpoint: null,
     cheight: 500,
     _self: null,
     data: null,
-    start: null,
+
 
     allowDropAction: function(ev) {
       ev.originalEvent.preventDefault();
@@ -173,11 +112,17 @@
       this.canvas.fxRemove(this.canvas.getActiveObject());
       this.autoSaveSceneAction();
     },
+    flipAsset: function() {
+      var obj = this.canvas.getActiveObject();
+      if(obj) {
+        obj.set("flipX", true);
+        this.canvas.renderAll();
+      }
+    },
       
     autoSaveSceneAction: function() {
         _self = this;
         var date = new Date();
-        //console.log(_self.currentUser);
         var item =
             {  
                 image: _self.canvas.toSVG(),
@@ -187,7 +132,6 @@
                 f_done: false,
                 data: date.toDateString() 
             }
-      //get global current id ?
         _self.data.scenes[_self.globals.sceneEditorNumber] = item; 
         _self.$.fbase.commit();
     },
@@ -215,18 +159,17 @@
 
     insertBackgroundAction: function(url) {
         fabric.Image.fromURL(url, function(oImg) {
-          console.log(" jestem tu");
-          //oImg.set({width: _self.$.c1.width, height: _self.$.c1.height, top: 0, left: '50%'});
           _self.$.c1.fabric.setBackgroundColor(
               {
                 source: url,
                 repeat: 'no-repeat'
               },
-              _self.$.c1.fabric.renderAll.bind(_self.$.c1.fabric)
+              _self.$.c1.fabric.renderAll()
             );
           _self.autoSaveSceneAction();
         });
     },
+
     insertItemAction: function(url, x, y) {
         fabric.Image.fromURL(url, function(oImg) {
           oImg.setPositionByOrigin(_self.cpoint, "center", "center");
@@ -244,7 +187,7 @@
             if ( !(id in _self.$.c1.clouds) ){
               var text = new fabric.IText("Write your text", {
                   fontFamily: 'Pintass',
-                fontSize: 20
+                  fontSize: 20
               });
               _self.$.c1.clouds[id] = {};
               _self.$.c1.clouds[id]['text'] = text 
@@ -312,6 +255,8 @@
       
       } else {
           this.canvas = new fabric.Canvas(this.$.c1, { backgroundColor: "#9ff" });
+          this.canvas.centeredScaling = true;
+          this.canvas.controlsAboveOverlay = true;
           this.$.c1.fabric = this.canvas;
           this.canvas.on("mouse:move", function() { _self.autoSaveSceneAction();});
           this.$.c1.clouds = {}   
@@ -319,7 +264,6 @@
       }
     },
 
-     
     ready : function() {
       this.initialize();
       _self = this;
@@ -334,6 +278,7 @@
     }
 
   });
+})();
 
   </script>
 </polymer-element>
