@@ -2,8 +2,23 @@
 
 <polymer-element name="gallery-page">
     <template>
-        <h1>Gallery Page</h1>
-        <gallery-view></gallery-view>
+        <style>
+            .content-wrapper {
+                 width: 1200px;
+                height: 100%;
+                margin: 0 auto;
+                padding: 45px 0;
+            }
+            h3 {
+                color: #3bb4be;
+                font-size: 24px;
+                font-weight: normal;
+            }
+        </style>
+        <div class="content-wrapper">
+            <h3>Gallery Page</h3>
+            <gallery-view></gallery-view>
+        </div>
     </template>
     
     <script>

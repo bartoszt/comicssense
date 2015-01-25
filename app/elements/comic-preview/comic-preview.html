@@ -8,26 +8,63 @@
         <style>
         #comicPreview {
             overflow: hidden;
+            width: 100%;
         }
         #comicPreview div{
-            width: 300px;
-            height: 300px;
+            width: 390px;
+            height: 500px;
             float: left;
+            border: 3px solid #000;
+            border-radius: 6px;
+            margin: 5px 3px 15px 0;
+        }
+         h3 {
+            color: #3bb4be;
+            font-size: 24px;
+            font-weight: normal;
+             overflow: hidden;
+        }
+        h3 a {
+            text-decoration: none;
+            color: #3bb4be;
+            
+        }
+        h3 a:hover {
+            opacity: 0.6;
+        }
+            
+        h3 span {
+            line-height: 40px;
+            float: left;
+         }
+        h3 span:first-child {
+            line-height: 40px;
+            font-size: 40px;
+            margin-right: 12px;
+         }
+        .html-echo {
+            width: 100%;
+        }
+        article section svg{
+            width: 100%;
         }
         </style>
         <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/comicses/{{pathArg1}}"></firebase-element>
         <pvc-globals values="{{globals}}"></pvc-globals>
         
         <article>
-            <h1>{{data.comics.title}}</h1>
+            <h3><a href="#/gallery"><span>&#60;</span> <span>{{data.comics.title}}</span></a></h1>
 
             <section id="comicPreview">
                 <template repeat="{{scene in data.comics.scenes}}">
                     <div>
-                        <html-echo html="{{scene.image}}"></html-echo>
+                        <html-echo html="{{scene.image}}" class="html-echo"></html-echo>
                     </div>
                 </template>
             </section>
+            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-54c5371e761cedb5" async="async"></script>
+
         </article>
     </template>  
     

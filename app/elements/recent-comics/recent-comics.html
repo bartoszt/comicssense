@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
+
+<link rel="import" href="../html-echo/html-echo.html">
+
+<polymer-element name="recent-comics">
+    <template>
+        <style> 
+            h3 {
+                font-size:24px;
+                color: #3bb4be;
+            }
+            .comicsItem {
+                display:inline-block;
+                vertical-align: top;
+            }
+            span.author {
+                display:block;
+                font-size:12px;
+            }
+        </style>
+        <firebase-element id="base" data="{{data}}" keys="{{keys}}" location="https://comicsense.firebaseio.com/comicses/" limitToFirst="1"></firebase-element>
+        <pvc-globals values="{{globals}}"></pvc-globals>
+         
+        
+            <h3>Recently created - "{{data[keys[0]].comics.title}}"</h3>
+            <!-- carousel of few comicses -->
+
+            <template repeat="{{scene in data[keys[0]].comics.scenes}}">
+                <div class="comicsItem">
+                    <html-echo html="{{scene.image}}"></html-echo>
+                    <span class="author">{{scene.author}}</span>
+                </div>
+            </template>  
+    </template>  
+    
+    <script>
+    (function () {
+       Polymer({ 
+           data : null,
+           keys : null,
+           
+           domReady : function () {  
+                 console.log(this.data);  
+                 console.log(this.keys);  
+              }
+       });
+    })();
+    </script>
+</polymer-element>
