@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/core-icons/core-icons.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-element.html">
-
-
 
 <polymer-element name="comics-view">
     <template>         
@@ -93,7 +93,7 @@
             
         </style>
         
-        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
+        <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics1"></firebase-element>
         <firebase-element id="baseComicses" keys={{keys}} data="{{dataComicses}}" location="https://comicsense.firebaseio.com/comicses"></firebase-element>
         
         <section id="comicsView">
@@ -101,7 +101,8 @@
                 <h3>Create new comics</h3>
                 <label for="comicsTitle">Comics Title</label>
                 <input id="comicsTitle" type="text" value="{{title}}" />
-                <button on-click="{{createNewComicsAction}}">Create new</button>
+                <paper-button on-click="{{createNewComicsAction}}" raised ><core-icon icon="add-circle" role="img"></core-icon>&nbsp;&nbsp;Create new</paper-button>
+                <button on-click="{{createNewComicsAction}}" >Create new</button>
             </div>
             <div id="comicsInProgress">
                 <h3>{{data.title}}</h3>

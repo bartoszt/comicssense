@@ -13,37 +13,174 @@
         
         <pvc-globals values="{{globals}}"></pvc-globals>
         
+        <style>
+            #loginFormWrapper {
+                width:1200px;
+                height:600px;
+                margin:0 auto;
+                padding-top:60px;
+            }
+            
+            .col {
+                display:inline-block;
+                width:47%;
+                height:100%;
+                text-align:left;
+                box-sizing: border-box;
+                vertical-align: top;
+            }
+            
+            .col:first-child {
+                border-right:2px solid #969695;
+                margin-right:60px;
+            }
+            .col:last-child {
+                padding-left:100px;
+            }
+            
+            section {
+                height:171px;
+                margin-top:40px;
+            }
+            
+            .socialLogin {
+                list-style:none;
+                margin:0;
+                padding:0;
+            }
+            .socialLogin li {
+                display:inline-block;
+                cursor:pointer;
+                margin-right:27px;
+            }
+            i {
+                font-style:normal;
+            }
+            i:hover {
+                opacity:0.7;
+            }
+            i:before {
+                font-family:icomoon;
+                font-size:80px;
+                
+            }
+            .lFacebook i:before {
+                content: "\e604";
+                color:#3d649e;
+            }
+            .lGoogle  i:before {
+                content: "\e605";
+                color:#d44a46;
+            }
+            .lTwitter  i:before {
+                content: "\e607";
+                color:#43adde;
+            }
+            .lGithub  i:before {
+                content: "\e606";
+            }
+            
+            input[type="text"], input[type="password"] {
+                border-radius:12px;
+                border:3px solid #000;
+                padding:12px 25px;
+                font-size:18px;
+                margin-bottom:20px;
+                width:400px;
+                box-sizing: border-box;
+            }
+            input[type="text"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder {
+                color:#878786;   
+            }
+            
+            #errorContainer {
+                color:#cc2019;
+                padding:20px 0;
+            }
+            #errorContainer:empty {
+                display:none;
+            }
+            form {
+                width:400px;
+                
+            }
+            btn-action {
+                float:right;
+                margin-top:10px;
+            }
+            
+            p {
+                font-size:14px;
+                line-height:20px;
+            }
+            
+            header {
+                font-size:32px;
+                margin-bottom:26px;
+            }
+            
+            header a {
+                cursor:pointer;
+            }
+            .signInBtn {                
+                color:#3eb4be;
+            }
+            .register-state .registerBtn {
+                color:#3eb4be;
+            }
+            .register-state .signInBtn {
+                color:#000;
+            }
+            
+        </style>
+        
         <div id="loginFormWrapper" hidden?="{{!statusKnown || user}}">
-            <div id="errorContainer"></div>
             
-            <form id="loginForm" layout horizontal center>
-                <label for="s_loginInput">E-mail</label>
-                <input type="text" id="s_loginInput" value="{{email}}" placeholder="E-mail address" />
-
-                <label for="s_passwordInput">Password</label>
-                <input type="password" id="s_passwordInput" value="{{password}}" placeholder="Password" />
-
-                <input type="button" value="Sign in" on-click="{{signinAction}}" />
-                <input type="button" value="Registration" on-click="{{switchViewAction}}"  />
-            </form>
-
-            <form id="registerForm" layout horizontal center>
-                <label for="loginInput">Email</label>
-                <input type="text" id="r_loginInput" value="{{rEmail}}" placeholder="E-mail address" />
-
-                <label for="passwordInput">Password</label>
-                <input type="password" id="r_passwordInput" value="{{rPassword}}" placeholder="Password" />
-
-                <input type="button" value="Register" on-click="{{registerAction}}" />
-                <input type="button" value="Sign in" on-click="{{switchViewAction}}" />
-            </form>
+            <header>        
+                <a class="signInBtn" on-click="{{switchViewAction}}">Sign in</a>
+                <span>/</span>        
+                <a class="registerBtn"  on-click="{{switchViewAction}}" >Register</a>
+            </header>
             
-            <ul>
-                <li><input type="button" value="Login with Facebook" on-click="{{signinFacebook}}" /></li>
-                <li><input type="button" value="Login with Google" on-click="{{signinGoogle}}" /></li>
-                <li><input type="button" value="Login with Twitter" on-click="{{signinTwitter}}" /></li>
-                <li><input type="button" value="Login with Github" on-click="{{signinGithub}}" /></li>
-            </ul>
+            <p>Get more than ever out of Comics Sense.<br/>
+                Build together comics strips, participate in discussions, easily share your favourite stories, and connect with waht your friends are creating and sharing.</p>
+            
+            <p>Sign in with your mail or select your favourite social network to get started</p>
+            
+            <section>                
+                <div class="col">
+                    <ul class="socialLogin">
+                        <li><a class="lGoogle" on-click="{{signinGoogle}}"><i></i></a></li>
+                        <li><a class="lFacebook" on-click="{{signinFacebook}}"><i></i></a></li>
+                        <li><a class="lTwitter" on-click="{{signinTwitter}}"><i></i></a></li>
+                        <li><a class="lGithub" on-click="{{signinGithub}}" ><i></i></a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <div id="errorContainer"></div>
+                    <form id="loginForm"3>
+                        <input type="text" id="s_loginInput" value="{{email}}" placeholder="Your email address" />
+
+                        <input type="password" id="s_passwordInput" value="{{password}}" placeholder="Your password" />
+
+                        <div class="nav">
+                            <btn-action on-click="{{signinAction}}">Log in</btn-action> 
+                        </div> 
+
+                    </form>
+
+                    <form id="registerForm" layout horizontal center>
+                         <input type="text" id="r_loginInput" value="{{rEmail}}" placeholder="E-mail address" />
+
+                        <input type="password" id="r_passwordInput" value="{{rPassword}}" placeholder="Password" />
+                        
+                        
+                        <btn-action on-click="{{registerAction}}">Register</btn-action>  
+                    </form>                    
+                </div>
+            </section> 
+            
+            
         </div>
     </template>
     <script>
