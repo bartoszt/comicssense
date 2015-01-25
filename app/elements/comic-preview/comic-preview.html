@@ -21,7 +21,7 @@
             <h2>{{data.comics[id].title}}</h2>
             <h2></h2>
             <section id="comicPreview">
-                <template repeat="{{scene in data.comics[0].scenes}}">
+                <template repeat="{{scene in data.comics[id].scenes}}">
                     <div>
                         <html-echo html="{{scene.image}}"></html-echo>
                     </div>
