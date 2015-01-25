@@ -127,6 +127,15 @@
         #comicsTitle:focus {
             outline: none;
         }
+        .progress span.author {
+            color: #000;
+            position: absolute;
+            top: 540px;
+            font-size: 16px;
+            width: 270px;
+            left: 0;
+            text-align: right;
+        }
         </style>
         
         <firebase-element id="base" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics2"></firebase-element>
@@ -145,19 +154,19 @@
                 <div class="comicsTemplate">
                     <div class="comicsTemplateItem {{status[0]}}" on-click="{{editScene}}" data-scenenr="0">
                          <html-echo html="{{data.scenes[0].image}}"></html-echo>
-                         <div class='templateText progress'><span>&#8226;</span>Live Preview</div>
+                         <div class='templateText progress'><span>&#8226;</span>Live Preview<span class="author">Editing by: {{data.scenes[0].author}}</span></div>
                          <div class='templateText available'><h4>Add next</h4><span>start the story</span></div>
                          <div class='templateText done'>Done</div>
                     </div>            
                     <div class="comicsTemplateItem {{status[1]}}" on-click="{{editScene}}" data-scenenr="1">                
                         <html-echo html="{{data.scenes[1].image}}"></html-echo>
-                        <div class='templateText progress'><span>&#8226;</span>Live Preview</div>
+                        <div class='templateText progress'><span>&#8226;</span>Live Preview<span class="author">Editing by: {{data.scenes[1].author}}</span></div>
                         <div class='templateText available'><h4>Add next</h4><span>continue the story</span></div>
                         <div class='templateText done'>Done</div>
                     </div>            
                     <div class="comicsTemplateItem {{status[2]}}" on-click="{{editScene}}" data-scenenr="2">                
                         <html-echo html="{{data.scenes[2].image}}"></html-echo>
-                        <div class='templateText progress'><span>&#8226;</span>Live Preview</div>
+                        <div class='templateText progress'><span>&#8226;</span>Live Preview<span class="author">Editing by: {{data.scenes[2].author}}</span></div>
                          <div class='templateText available'><h4>Add next</h4><span>end the story</span></div>
                          <div class='templateText done'>Done</div>
                     </div>
