@@ -2,8 +2,19 @@
 
 <polymer-element name="comic-page" attributes="pathArg1" noscript>
     <template>
-        <h1>Comic Page</h1>
-        <comic-preview pathArg1="{{pathArg1}}"></comic-preview>
+        <style>
+            .content-wrapper {
+                 width: 1200px;
+                height: 100%;
+                margin: 0 auto;
+                padding: 45px 0;
+            }
+           
+        </style>
+        <div class="content-wrapper">
+            <comic-preview pathArg1="{{pathArg1}}"></comic-preview>
+        </div>
+        
     </template>     
     
 </polymer-element>

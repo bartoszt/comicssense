@@ -12,7 +12,8 @@
     "app-router": "~2.3.2",
     "fabric": "~1.4.13",
     "alertify.js": "0.3.11",
-    "bxslider-4": "~4.1.3"
+    "bxslider-4": "~4.1.3",
+    "timer.js": "0.1.1"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^2.0.0"
