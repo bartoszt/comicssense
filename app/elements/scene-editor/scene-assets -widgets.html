@@ -1,12 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<polymer-element name="scene-assets" >
+<polymer-element name="scene-assets-widgets" >
   <template>
     <style>
     :host {
       display: block;
       position: relative;
       background-color: #ccc;
-      padding:  4px;
+      padding:  7px;
       border: solid 1px #ccc;
       font-size: 1.2rem;
       font-weight: 300;
@@ -19,22 +19,58 @@
       width: 100px;
       height: 100px;
     }
+        
+    #tabs ul {
+        list-style: none;
+        overflow: hidden;
+        padding-left: 8px;
+    }
+    #tabs ul li{
+        width: 145px;
+        height: 40px;
+        line-height: 40px;
+        background: #fff;
+        border: 1px solid #3bb4be;
+        text-align: center;
+        float: left;
+        margin-right: 4px;
+     }
+     #tabs ul li.ui-state-active {
+         background: #3bb4be;
+         border: 1px solid #3bb4be;
+     }  
+        
+    #tabs ul li.ui-state-active a{
+         color: #fff;
+     }  
     
+    #tabs ul li.ui-state-active a:focus{
+         outline: none;
+     } 
+        
+    #tabs ul li a {
+        color: #3bb4be;
+        text-decoration: none;
+    }
+      
+    #actions {
+        float: right;
+    }
+        
+    #tabs div{
+        padding: 0px 14px;
+        }
+        
     </style>
-
-      <template repeat="{{i in bgs}}">
-
-        <input type="image" class="asset" src="i" alt="hopek" dragabble="true" />
-      </template>      
-      <template repeat="{{i in items}}">
-        <input type="image" class="asset" src="i" alt="hopek" dragabble="true" />
-      </template>
-      <template repeat="{{i in clouds}}">
-        <input type="image" class="asset" src="i" alt="hopek" dragabble="true" />
-      </template>
-    
-      <!--  <div id="tabs">
-          <div>
+        <div id="tabs">
+            <ul>
+                <li><a href="#tabs-1">People 1</a></li>
+                <li><a href="#tabs-2">People 2</a></li>
+                <li><a href="#tabs-3">Others</a></li>
+                <li><a href="#tabs-4">Backgrounds</a></li>
+                <li><a href="#tabs-5">Clouds</a></li>
+            </ul>
+            <div id="tabs-1" >
               <input type="image" class="asset" src="/assets/items/set1-01.png" alt="set1" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set1-02.png" alt="set1" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set1-03.png" alt="set1" dragabble="true" />        
@@ -54,33 +90,14 @@
               <input type="image" class="asset" src="/assets/items/set1-17.png" alt="set1" dragabble="true" />     
               <input type="image" class="asset" src="/assets/items/set1-18.png" alt="set1" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set1-19.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-20.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-21.png" alt="set1" dragabble="true" />     
-              <input type="image" class="asset" src="/assets/items/set1-22.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-23.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-24.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-25.png" alt="set1" dragabble="true" />                         
-              <input type="image" class="asset" src="/assets/items/set1-26.svg" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-27.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-28.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-29.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-30.png" alt="set1" dragabble="true" />    
-              <input type="image" class="asset" src="/assets/items/set1-31.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-32.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-33.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-34.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-35.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-36.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-37.png" alt="set1" dragabble="true" />     
-              <input type="image" class="asset" src="/assets/items/set1-38.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-39.png" alt="set1" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set1-40.png" alt="set1" dragabble="true" />        
-
+              <input type="image" class="asset" src="/assets/items/set1-20.png" alt="set1" dragabble="true" />   
+            </div>
+            <div id="tabs-2">
               <input type="image" class="asset" src="/assets/items/set2-01.png" alt="set2" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set2-02.png" alt="set2" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set2-03.png" alt="set2" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set2-04.png" alt="set2" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set2-05.png" alt="set2" dragabble="true" />        
+              <input type="image" class="asset" src="/assets/items/set2-05.png" alt="set2" dragabble="true" />      
               <input type="image" class="asset" src="/assets/items/set2-06.png" alt="set2" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set2-07.png" alt="set2" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set2-08.png" alt="set2" dragabble="true" />        
@@ -125,38 +142,62 @@
               <input type="image" class="asset" src="/assets/items/set2-47.png" alt="set2" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set2-48.png" alt="set2" dragabble="true" />        
               <input type="image" class="asset" src="/assets/items/set2-49.png" alt="set2" dragabble="true" />        
-              <input type="image" class="asset" src="/assets/items/set2-50.png" alt="set2" dragabble="true" />    
+              <input type="image" class="asset" src="/assets/items/set2-50.png" alt="set2" dragabble="true" />   
             </div>
-        </div> -->
+            <div id="tabs-3">
+                  <input type="image" class="asset" src="/assets/items/set1-21.png" alt="set1" dragabble="true" />     
+                  <input type="image" class="asset" src="/assets/items/set1-22.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-23.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-24.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-25.png" alt="set1" dragabble="true" />                         
+                  <input type="image" class="asset" src="/assets/items/set1-26.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-27.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-28.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-29.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-30.png" alt="set1" dragabble="true" />    
+                  <input type="image" class="asset" src="/assets/items/set1-31.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-32.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-33.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-34.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-35.png" alt="set1" dragabble="true" /> 
+                  <input type="image" class="asset" src="/assets/items/set1-36.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-37.png" alt="set1" dragabble="true" />     
+                  <input type="image" class="asset" src="/assets/items/set1-38.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-39.png" alt="set1" dragabble="true" />        
+                  <input type="image" class="asset" src="/assets/items/set1-40.png" alt="set1" dragabble="true" />  
+            </div>
+            <div id="tabs-4">
+                 <input type="image" class="asset" src="/assets/bgs/gradient-bg1.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/gradient-bg2.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/gradient-bg3.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/gradient-bg4.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/gradient-bg5.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/gradient-bg6.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/gradient-bg7.png" alt="set1" dragabble="true" />   
+                 <input type="image" class="asset" src="/assets/bgs/bg1.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/bg2.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/bg3.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/bg4.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/bg5.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/bg6.png" alt="set1" dragabble="true" />     
+                 <input type="image" class="asset" src="/assets/bgs/bg7.png" alt="set1" dragabble="true" /> 
+            </div>
+            <div id="tabs-5">
+                <input type="image" class="asset" src="/assets/clouds/speechbuble-01.png" alt="set1" dragabble="true" /> 
+                <input type="image" class="asset" src="/assets/clouds/speechbuble-02.png" alt="set1" dragabble="true" />   
+                <input type="image" class="asset" src="/assets/clouds/speechbuble-03.png" alt="set1" dragabble="true" />   
+                <input type="image" class="asset" src="/assets/clouds/thinkhbuble-01.png" alt="set1" dragabble="true" />   
+                <input type="image" class="asset" src="/assets/clouds/thinkhbuble-02.png" alt="set1" dragabble="true" />   
+                <input type="image" class="asset" src="/assets/clouds/thinkhbuble-03.png" alt="set1" dragabble="true" />   
+            </div>
+    </div>
   </template>
   <script>
-  Polymer({
-    bgs: null,
-    items: null,
-    clouds: null,
-    _self: null,
-    data: null,
-
- 
-
-    ready: function() {
-      if(this.activate) {
-          _self = this;
-          $().getJSON("/assets/items.json", function(json) {
-            var items = eval(json);
-            consol.log(items);
-            //trzeba przefiltrować, żęby app/dit wywalic
-            _self.items = items;
-          });
-
-          $(this.$.btns).find("input").on("dragstart", this.dragAction);
-          $(this.$.btns).find("button#reset").click(this.clearBoardAction);
-          $(this.$.btns).find("button#save").click(this.saveAction);
-          _self = this;
-      }
-    }
-
-  });
-
+      Polymer('scene-assets-widgets', {
+            domReady: function () {
+                console.log($(this.$.tabs));
+               $(this.$.tabs).tabs(); 
+            }
+        });
   </script>
 </polymer-element>
