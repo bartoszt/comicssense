@@ -28,6 +28,21 @@
             a h2 {
                 font-size:32px;
             }
+            a i:before {
+                font-family:'icomoon';
+                font-style:normal;
+                display:inline-block;
+                margin-right:10px;
+                font-size:26px;
+                color:#3bb4be;
+                vertical-align: middle;
+            }
+            .btn-gallery i:before {
+                content: "\e601";
+            }
+            .btn-live i:before {                
+                content: "\e600";
+            }
             
             .logo {
                 float:left;
@@ -43,7 +58,7 @@
             
             li {
                 display:inline-block;
-                padding:0 5px; 
+                padding:0 7px; 
             }
             
         </style>
@@ -55,8 +70,8 @@
                 <h2>Team Comics Creator</h2>
             </a> 
             <nav>
-                <li><a href="/#/gallery">Gallery</a></li>
-                <li><a href="/#/scene">Live Preview</a></li>
+                <li><a class="btn-gallery" href="/#/gallery"><i></i>Gallery</a></li>
+                <li><a class="btn-live" href="/#/scene"><i></i>Live Preview</a></li>
                 <li><logout-form></logout-form></li>
             </nav>  
         </header> 
