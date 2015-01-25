@@ -12,7 +12,7 @@
              article section {
                  width: 100%;
                  height: 550px;
-                 margin-bottom: 30px;
+                 margin-bottom: 220px;
                  position:relative;
              }
             article section div {
@@ -56,6 +56,7 @@
         <article>
             <template repeat="{{key, keyIndex in keys}}">
                 <section>
+                    <a class="title" href="#/comics/{{keys[keys.length-keyIndex-1]}}">{{data[keys[keys.length-keyIndex-1]].comics.title}}</a>
                     <div>
                         <a href="#/comics/{{keys[keys.length-keyIndex-1]}}">
                             <html-echo html="{{data[keys[keys.length-keyIndex-1]].comics.scenes[0].image}}"></html-echo>
@@ -63,7 +64,7 @@
                             <html-echo html="{{data[keys[keys.length-keyIndex-1]].comics.scenes[2].image}}"></html-echo>
                         </a>
                     </div>
-                    <a class="title" href="#/comics/{{keys[keys.length-keyIndex-1]}}">{{data[keys[keys.length-keyIndex-1]].comics.title}}</a>
+                    
                     <span class="author">{{data[keys[keys.length-keyIndex-1]].comics.scenes[0].author}} | {{data[keys[keys.length-keyIndex-1]].comics.scenes[1].author}} | {{data[keys[keys.length-keyIndex-1]].comics.scenes[2].author}}</span>
                 </section>
             </template>

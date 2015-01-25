@@ -19,6 +19,11 @@
             li:after {
                 display:inline-block;
                 vertical-align: middle;
+                content: "/";
+                padding-left:20px;
+            }
+            li:last-child:after {
+                content:" ";
             }
         </style>
         <pvc-globals values="{{globals}}"></pvc-globals>
