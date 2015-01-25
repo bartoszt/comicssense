@@ -25,7 +25,7 @@
       border-radius: 5px;
     }
     .holder:hover canvas { 
-        border-color: #000;
+        border-color: #1f6b72;
     }
     .assets div {
       border-bottom: solid 1px #eee;
@@ -40,7 +40,7 @@
       height: 100px;
     }
     </style>
-    <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics1"></firebase-element>
+    <firebase-element id="fbase" data="{{data}}" location="https://comicsense.firebaseio.com/currentComics"></firebase-element>
     <section id="sceneEditor">
       <h1>Edit scene {{scenaNr}}</h1>
       <counter-view starttimer="true"></counter-view>
@@ -53,13 +53,27 @@
           <input type="image" class="asset" src="/assets/items/pan01.svg" alt="pan01" dragabble="true" />
           <input type="image" class="asset" src="/assets/items/pan02.svg" alt="pan02" dragabble="true" />
           <input type="image" class="asset" src="/assets/items/pan03.png" alt="pan03" dragabble="true" />        
-          <input type="image" class="asset" src="/assets/items/as1.png" alt="hopek" dragabble="true" />
-          <input type="image" class="asset" src="/assets/items/as2.png" dragabble="true" />
-          <input type="image" class="asset" src="/assets/items/as3.png" alt="gwiazdka" dragabble="true" />
-        </div><div>
+          <input type="image" class="asset" src="/assets/items/set1-01.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-02.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-03.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-04.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-05.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-06.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-07.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-08.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-09.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-10.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-11.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-12.svg" alt="set1" dragabble="true" />        
+          <input type="image" class="asset" src="/assets/items/set1-13.svg" alt="set1" dragabble="true" />        
+
+        </div>
+
+        <div>
           <input type="image" class="bg" src="/assets/bgs/b1.png" dragabble="true" />
           <input type="image" class="bg" src="/assets/bgs/b2.jpg" dragabble="true" />
-          </div><div>
+          </div>
+          <div>
           <input type="image" class="cloud" src="/assets/clouds/c1.svg" dragabble="true" />
           <input type="image" class="cloud" src="/assets/clouds/cloud2.svg" dragabble="true" />
         </div>
@@ -159,9 +173,6 @@
               },
               _self.$.c1.fabric.renderAll.bind(_self.$.c1.fabric)
             );
-          //or add item in bg replacing existing so you can fit it in.
-          /*_self.$.c1.fabric.add(oImg)
-          _self.$.c1.fabric.sendToBack(oImg);*/
           _self.autoSaveSceneAction();
         });
     },
@@ -189,8 +200,7 @@
               _self.$.c1.clouds[id]['img'] = img
               _self.$.c1.clouds[id]['clicked'] = 1
               _self.setTextPosition(id);  
-                      
-                      text.setWidth(10);
+                text.setWidth(10);
               _self.$.c1.fabric.add(text);  
             }
              _self.$.c1.clouds[id]['clicked'] += 1
@@ -226,7 +236,7 @@
         _self.$.c1.fabric.clear();
         _self.$.c1.fabric.deactivateAllWithDispatch()
         this.$.c1.clouds = {};
-        _self.$.c1.fabric.setBackgroundColor("#9FF");
+        _self.$.c1.fabric.setBackgroundColor("#E5F7F8");
         _self.prepareBoardAction();
     },
     saveAction: function(ev) {
@@ -262,7 +272,6 @@
       this.initialize();
       _self = this;
       if(this.globals.sceneEditorActivate) { 
-          //this.canvas.add(new fabric.Circle({ radius: 30, fill: '#ff5', top: 100, left: 100 }));
           this.prepareBoardAction();
           $(this.$.dragArea).on("drop", this.dropAction);
           $(this.$.dragArea).on("dragover", this.allowDropAction);
