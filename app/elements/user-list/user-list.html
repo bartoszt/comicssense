@@ -3,10 +3,28 @@
 
 <polymer-element name="user-list">
     <template>
+        <style>
+            h3 {
+                display:inline-block;
+                vertical-align: middle;
+                color:#1fb1bf;
+            }
+            ul {
+                display:inline;
+            }
+            li { 
+                display:inline-block;
+                padding:0 10px;
+            }
+            li:after {
+                display:inline-block;
+                vertical-align: middle;
+            }
+        </style>
         <pvc-globals values="{{globals}}"></pvc-globals>
         <firebase-element id="userBase" data="{{data}}" keys="{{keys}}" location="https://comicsense.firebaseio.com/usersonline"></firebase-element>
          
-        <h2>Users list</h2> 
+        <h3>Watching Users: </h3> 
         <ul>
             <template repeat="{{key in keys}}">   
                 <li>{{data[key].username}}</li>

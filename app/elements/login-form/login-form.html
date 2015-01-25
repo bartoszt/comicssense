@@ -229,7 +229,7 @@
             this.globals.currentUser = this.user; 
             this.saveUserNickname();
             this.newOnlineUser();
-            //document.querySelector('app-router').go('/scene');
+            document.querySelector('app-router').go('/scene');
         },
         onLoginError : function (err) {
             console.log("An error occured.", err);
@@ -267,7 +267,10 @@
         },
           
         newOnlineUser : function () { 
-           
+           if(!this.onlineUserAdded && this.globals.currentUser.nickname && this.globals.currentUser.auth.uid) {
+              this.$.userBase.push({username : this.globals.currentUser.nickname, uid : this.globals.currentUser.auth.uid});
+              this.onlineUserAdded = true;
+            }
         }
       });
 

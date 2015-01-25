@@ -17,7 +17,10 @@
             scene-editor {
                 z-index:1;   
             }
-            .clearfix {clear:both;}
+            user-list {
+                position:absolute;
+                top:700px;
+            } 
         </style>
         <pvc-globals values="{{globals}}"></pvc-globals>
         
@@ -26,7 +29,7 @@
         
         <section class="scenePage" > 
             <comics-view></comics-view>
-            <!-- <user-list class="clearfix"></user-list> --->
+            <user-list></user-list>
         </section>
     </template>
     
